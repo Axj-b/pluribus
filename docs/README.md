@@ -105,8 +105,10 @@ decision applies.
 ## Open questions
 
 The [open questions register](questions/README.md) tracks unresolved design and implementation
-issues with status, source and next action. The [open-question map](maps/open-questions.md) groups
-them by theme. Add new questions through [`templates/question.md`](templates/question.md).
+issues with status, source, explanation, a suggested behavior (proposal), trade-offs, confidence and
+next action. The [open-question map](maps/open-questions.md) groups them by theme. Add new questions
+through [`templates/question.md`](templates/question.md). Suggestions are not accepted decisions; if
+one is accepted, create a decision record and update the affected spec.
 
 ## Glossary and log
 

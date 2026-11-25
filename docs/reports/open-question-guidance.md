@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-open-question-guidance
-status: review
+status: merged
 task: Open question explanations and suggested behaviors
 branch: chore/open-question-guidance
 base: dev
+merged_into: dev
+merged_at: 2026-11-25
 date: 2026-11-25
 tags: [report, question, guidance]
 last_reviewed: 2026-11-25
@@ -24,7 +26,7 @@ suggestions are proposals for review, not accepted decisions.
 - **Base:** `dev`
 - **Commits:** see `git log --oneline dev..HEAD`
 - **Date:** 2026-11-25
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

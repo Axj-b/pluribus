@@ -14,7 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- [Open question guidance](../reports/open-question-guidance.md) — `chore/open-question-guidance` — explanations, suggested behaviors and trade-offs for all 28 open questions.
+- None.
 
 ## Approved
 
@@ -22,6 +22,7 @@ last_reviewed: 2026-11-25
 
 ## Merged
 
+- [Open question guidance](../reports/open-question-guidance.md) — `chore/open-question-guidance` — explanations, suggested behaviors and trade-offs for all 28 open questions.
 - [Task workflow scaffold](../reports/task-workflow.md) — `chore/task-workflow` — branch/report workflow and templates.
 
 ## How to use reports

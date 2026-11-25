@@ -54,8 +54,9 @@ All integers are network byte order:
 ## Implementation status
 
 `pluribusfabric` currently implements frame header encoding/decoding, bounded incremental decoding,
-error latching and provisional bootstrap type constants. TCP transport, session handshake, replay
-and payload schemas are next.
+error latching, a blocking `FrameStream` over a narrow `Stream` interface, in-memory loopback
+transport and blocking IPv4 TCP. Session handshake, replay, payload schemas and the async transport
+stack are next.
 
 ## Related
 

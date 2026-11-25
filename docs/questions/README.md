@@ -320,7 +320,8 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Keep a narrow transport/`Stream` interface and implement a small blocking TCP transport first to prove the handshake. Then benchmark a standalone Asio-based implementation (or Boost.Asio if already accepted) against platform sockets for loopback/LAN latency and allocations. Choose the async stack based on the documented targets, keep it private to the transport layer, and never expose its types in the public API.
 - **Trade-offs:** A blocking-first spike delays async work but reduces protocol risk. Asio is portable and well maintained but adds a dependency and learning curve.
 - **Confidence:** medium
-- **Next action:** Build the transport spike and measure loopback/LAN control round-trip before freezing the choice.
+- **Progress (2026-11-25):** the narrow blocking `Stream`, in-memory loopback and IPv4 TCP transport are implemented with loopback benchmarks. Async stack selection remains open.
+- **Next action:** Benchmark a standalone Asio candidate against the blocking reference and record the chosen stack.
 - **Related:** [Q-40](../decisions/engineering.md#q-40), [Fabric](../notes/fabric.md)
 
 ## OI-26 Workspace snapshot adoption

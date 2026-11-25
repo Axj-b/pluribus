@@ -20,14 +20,13 @@ slice is in place:
 | Target | Contents |
 |---|---|
 | `pluribuscore` | Strong IDs, portable errors, execution spec/state machine, node and service descriptors, sandbox path validation |
-| `pluribusfabric` | Control-frame header/encoding, bounded incremental decoder, provisional bootstrap message types |
+| `pluribusfabric` | Control-frame header/encoding, bounded incremental decoder, frame stream, in-memory loopback and blocking TCP transport |
 | `pluribusscheduler` | Pure V1 scheduler policy with exact integer/rational scoring |
-| tests | Unit tests for the core model, fabric framing and the documented scheduler cases |
+| tests | Unit tests for the core model, fabric framing/transport and the documented scheduler cases |
 
-Not implemented yet: TCP transport and session handshake, `pluribusmaster`,
-`pluribusnode`, `pluribussim` backends, artifact store, public C++ client, and
-the `plu` CLI. The wire serialization format and runtime ABI remain open design
-decisions.
+Not implemented yet: session handshake and replay, payload serialization, async transport stack,
+`pluribusmaster`, `pluribusnode`, `pluribussim` backends, artifact store, public C++ client, and the
+`plu` CLI. The wire serialization format and runtime ABI remain open design decisions.
 
 ## Build and test
 
@@ -53,7 +52,7 @@ manifest and dependency baseline are introduced.
 core/               platform-independent model and contracts
 fabric/             control framing and transport
 master/scheduler/   pure scheduling policy
-tests/              unit tests and test support
+tests/              unit tests, transport benchmarks and test support
 scripts/            parameterless repository checks and developer scripts
 cmake/              compiler options and shared CMake helpers
 docs/               architecture, specifications, second-brain layer and task reports

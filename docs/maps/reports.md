@@ -14,7 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- None.
+- [Fabric transport](../reports/fabric-transport.md) — `task/fabric-transport` — blocking TCP, loopback and frame-stream transport with benchmarks.
 
 ## Approved
 

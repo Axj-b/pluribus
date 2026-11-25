@@ -16,8 +16,8 @@ last_reviewed: 2026-11-25
 Source idea: [`../IDEA.md`](../IDEA.md), retained as the original idea. These documents record the
 current decisions. The answered questionnaire is a local, not committed source note.
 
-Status: **draft architecture; core model, scheduler and fabric framing implemented and unit-tested;
-ABI/runtime validation pending.**
+Status: **draft architecture; core model, scheduler, fabric framing/transport implemented and
+unit-tested; ABI/runtime validation pending.**
 
 ## Start here
 
@@ -37,11 +37,12 @@ ABI/runtime validation pending.**
 
 ## Current state
 
-- **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing.
-- **Next:** TCP transport/session handshake, dependency enforcement, serializer decision, then a
-  master registry/queue and node agent for the first `plu run hello`.
+- **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing and
+  blocking TCP transport.
+- **Next:** session handshake, payload codec decision, dependency enforcement, then a master
+  registry/queue and node agent for the first `plu run hello`.
 - **Not started:** master, node, runtime backends, store, client, CLI.
-- **Tests:** 48 unit tests across core, scheduler and fabric; see
+- **Tests:** 53 unit tests across core, scheduler and fabric; see
   [Implementation map](maps/implementation.md).
 
 ## How this knowledge base works

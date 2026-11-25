@@ -17,7 +17,7 @@ last_reviewed: 2026-11-25
 | Target | Location | Status | Tests |
 |---|---|---|---|
 | `pluribuscore` | [`core/`](../../core) | Model, IDs, errors, paths, state machine | 22 unit tests |
-| `pluribusfabric` | [`fabric/`](../../fabric) | Control framing and incremental decoder | 10 unit tests |
+| `pluribusfabric` | [`fabric/`](../../fabric) | Control framing, frame stream, in-memory loopback, blocking TCP transport | 15 unit tests |
 | `pluribusscheduler` | [`master/scheduler/`](../../master/scheduler) | Pure V1 scheduler | 16 unit tests |
 | `pluribusmaster` | — | Not started | — |
 | `pluribusnode` | — | Not started | — |
@@ -30,7 +30,7 @@ last_reviewed: 2026-11-25
 | Milestone | Scope | Status |
 |---|---|---|
 | A | Core model: IDs, spec, handle/state, node/resources, service, protocol contracts | Core model done; wire schema still open |
-| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing/decoder done; TCP, session and payload codec pending |
+| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing, frame stream, blocking TCP and loopback done; handshake, payload codec, heartbeat and async stack pending |
 | C | Node registry: registration, CPU/RAM reporting, health, `plu nodes` | Not started |
 | D | Remote execution: queue, trivial scheduler, assignment, launch, logs, exit, `plu run` | Scheduler done; master/node/runtime/CLI pending |
 | E | Lifecycle: `plu ps`, `plu stop`, persistent executions, node loss | Not started |
@@ -41,16 +41,16 @@ last_reviewed: 2026-11-25
 
 ### Now
 
-1. **TCP transport and connection boundary** for `pluribusfabric`: explicit bind, read/write loops,
-   bounded buffers, close semantics, fake in-memory transport for tests.
-2. **Handshake and session scaffolding**: Hello/Welcome/Reject, version negotiation, directional
+1. **Handshake and session scaffolding**: Hello/Welcome/Reject, version negotiation, directional
    sequence, replay/dedup boundary.
-3. **Wire payload codec decision**: benchmark FlatBuffers, Cap'n Proto and Protobuf on representative
+2. **Wire payload codec decision**: benchmark FlatBuffers, Cap'n Proto and Protobuf on representative
    control messages before freezing a schema. Until then, keep payloads opaque to framing.
-4. **Dependency enforcement**: add a configure/CI check that compares the CMake target graph to the
+3. **Dependency enforcement**: add a configure/CI check that compares the CMake target graph to the
    allowlist in [Spec 09](../spec/09-repository-cmake-structure.md#mechanical-enforcement).
-5. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
+4. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
    temporary dependency-free test harness.
+5. **Async transport benchmark**: compare the current blocking transport and an async stack
+   (for example Asio) against the documented loopback/LAN latency targets.
 
 ### Next
 
@@ -102,5 +102,6 @@ See the [open-question map](open-questions.md), especially:
 
 ## Session history
 
-- [2026-11-25](../log/2026-11-25.md) — core model, scheduler, fabric framing.
+- [2026-11-25](../log/2026-11-25.md) - core model, scheduler, fabric framing.
+- [Fabric transport report](../reports/fabric-transport.md) - blocking TCP, loopback and frame stream.
 - [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.

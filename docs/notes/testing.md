@@ -47,7 +47,8 @@ heterogeneity still requires real machines.
 ## Current state
 
 The repository uses a small dependency-free test harness while the vcpkg/GoogleTest baseline is
-undecided. Unit tests cover core, scheduler and fabric framing. Integration/system harnesses do not
+undecided. Unit tests cover core, scheduler, fabric framing and transport. Integration/system
+harnesses do not
 exist yet.
 
 ## Related

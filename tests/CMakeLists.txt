@@ -1,3 +1,5 @@
+find_package(Threads REQUIRED)
+
 add_library(pluribus_test_support STATIC
     support/test_main.cpp
 )
@@ -18,13 +20,21 @@ target_link_libraries(pluribus_core_tests PRIVATE
 )
 add_test(NAME core.unit COMMAND pluribus_core_tests)
 
-add_executable(pluribus_fabric_tests unit/fabric_tests.cpp)
+add_executable(pluribus_fabric_tests unit/fabric_tests.cpp unit/fabric_transport_tests.cpp)
 target_link_libraries(pluribus_fabric_tests PRIVATE
     pluribusfabric
     pluribus_test_support
     pluribus_warnings
+    Threads::Threads
 )
 add_test(NAME fabric.unit COMMAND pluribus_fabric_tests)
+
+add_executable(pluribus_fabric_bench bench/fabric_transport_bench.cpp)
+target_link_libraries(pluribus_fabric_bench PRIVATE
+    pluribusfabric
+    pluribus_warnings
+    Threads::Threads
+)
 
 add_executable(pluribus_scheduler_tests unit/scheduler_tests.cpp)
 target_link_libraries(pluribus_scheduler_tests PRIVATE

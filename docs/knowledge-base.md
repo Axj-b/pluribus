@@ -156,7 +156,8 @@ All fields are optional for templates, but published pages should set at least `
 
 ### Add or resolve a question
 
-1. Add an `OI-*` entry to [`questions/README.md`](questions/README.md) with source and next action.
+1. Add an `OI-*` entry to [`questions/README.md`](questions/README.md) with source, question,
+   explanation, suggested behavior, trade-offs, confidence and next action.
 2. Put it in a theme group in [`maps/open-questions.md`](maps/open-questions.md).
 3. When resolved, change status to `resolved`, link the decision or spec section, and update the
    maps. Do not delete the entry; history matters.

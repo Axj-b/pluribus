@@ -28,6 +28,7 @@ See [AGENTS.md](../../AGENTS.md) for the branch and review workflow.
 
 | Task | Branch | Status | Date |
 |---|---|---|---|
+| [Open question guidance](open-question-guidance.md) | `chore/open-question-guidance` | review | 2026-11-25 |
 | [Task workflow scaffold](task-workflow.md) | `chore/task-workflow` | merged | 2026-11-25 |
 
 ## Status vocabulary

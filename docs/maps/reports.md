@@ -14,7 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- None.
+- [Open question guidance](../reports/open-question-guidance.md) — `chore/open-question-guidance` — explanations, suggested behaviors and trade-offs for all 28 open questions.
 
 ## Approved
 

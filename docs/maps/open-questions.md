@@ -10,7 +10,10 @@ last_reviewed: 2026-11-25
 # Open questions map
 
 > A theme view of the [open questions register](../questions/README.md). The register is canonical
-> for status and next action; this map is for navigation.
+> for status, explanation, suggested behavior and next action; this map is for navigation.
+>
+> Suggested behaviors are proposals for discussion, not accepted decisions. See the register’s
+> “How to read a suggestion” section for the confidence and resolution rules.
 
 ## Execution and lifecycle
 

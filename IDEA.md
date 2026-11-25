@@ -574,7 +574,7 @@ Every execution receives an isolated working area.
 
 Logical form:
 
-`/Pluribus/executions/<ExecutionId>/`
+`/pluribus/executions/<ExecutionId>/`
 
 Containing roughly:
 
@@ -591,7 +591,7 @@ Windows might use:
 
 Linux might use:
 
-`/var/lib/Pluribus/executions/...`
+`/var/lib/pluribus/executions/...`
 
 The execution itself should see only Pluribus logical paths.
 
@@ -677,7 +677,7 @@ Master registry records:
 
 Consumers request:
 
-`Pluribus://radar-slave/control`
+`pluribus://radar-slave/control`
 
 They do not receive or store physical topology permanently.
 
@@ -984,7 +984,7 @@ Recommended initial repository:
   - hash
   - local_cache
 - `cli/`
-  - Pluribus
+  - plu
 - `tests/`
   - unit
   - integration
@@ -1084,7 +1084,7 @@ Terminates execution.
 
 Lists registered services.
 
-`Pluribus resolve radar-slave/control`
+`plu resolve radar-slave/control`
 
 Tests service discovery.
 

@@ -32,6 +32,7 @@ ABI/runtime validation pending.**
 | Look up a term | [Glossary](glossary.md) |
 | Understand this docs system | [Knowledge base guide](knowledge-base.md) |
 | Capture a loose idea | [Inbox](inbox.md) |
+| Review a task before merging | [Task reports](reports/README.md) |
 | Read the latest session | [Implementation log](log/README.md) |
 
 ## Current state
@@ -62,6 +63,7 @@ The same docs work on GitHub and in Obsidian: links are standard relative Markdo
 | [Implementation](maps/implementation.md) | See code status, milestones and next actions |
 | [Decisions](maps/decisions.md) | Find accepted choices by theme |
 | [Open questions](maps/open-questions.md) | Find unresolved design/implementation issues |
+| [Reports](maps/reports.md) | Review task evidence and merge status |
 | [Knowledge](maps/knowledge.md) | Browse atomic notes by domain and tag |
 
 ## Architecture
@@ -110,8 +112,17 @@ them by theme. Add new questions through [`templates/question.md`](templates/que
 
 - [Glossary](glossary.md) — shared terminology.
 - [Implementation log](log/README.md) — session journal and current next actions.
+- [Task reports](reports/README.md) — per-task evidence and review status.
 - [References](references/README.md) — external standards and sources.
 - [Archive](archive/README.md) — superseded material and archive policy.
+
+## Task workflow
+
+- Work happens on a dedicated task branch created from `dev`.
+- Each task is finished with a report in [`reports/`](reports/README.md), including verification,
+  measurements/benchmarks where relevant, risks and a review checklist.
+- The user decides whether the task is done and when to merge the branch into `dev`.
+- The full rules are in [`AGENTS.md`](../AGENTS.md).
 
 ## Conventions
 

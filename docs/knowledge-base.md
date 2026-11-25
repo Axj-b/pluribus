@@ -35,6 +35,7 @@ single question or to see what is still undecided. The second-brain layer adds:
 | Canonical design | [`architecture/`](architecture/01-overview.md), [`spec/`](spec/01-execution-model.md) | Architecture and specifications | **Yes** |
 | Decisions | [`decisions/`](decisions/README.md) | Themed ADR-style decision files | **Yes** for decision text |
 | Questions | [`questions/`](questions/README.md) | Open-issue register | **Yes** for status |
+| Reports | [`reports/`](reports/README.md) | Per-task evidence and review | No |
 | Log | [`log/`](log/README.md) | Session journal and progress | No |
 | Templates | [`templates/`](templates/note.md) | Creation templates | No |
 | References | [`references/`](references/README.md) | External standards and sources | No |
@@ -175,6 +176,16 @@ All fields are optional for templates, but published pages should set at least `
 2. Record what changed, how it was verified, what was learned, and the next action.
 3. Link touched notes, decisions and implementation-map changes.
 
+### Prepare a task for review
+
+1. Create the task branch from `dev` and keep work off `dev`/`master`.
+2. When the task is implemented and verified, create `reports/<task-slug>.md` from
+   [`templates/report.md`](templates/report.md).
+3. Include verification commands/results and measurements/benchmarks when relevant.
+4. Update [`reports/README.md`](reports/README.md), [`maps/reports.md`](maps/reports.md) and the
+   [implementation log](log/README.md).
+5. Stop and ask the user to review; only the user merges into `dev`.
+
 ## Review cadence
 
 - **Per session:** update the log and the implementation map; triage the inbox.
@@ -198,6 +209,7 @@ All fields are optional for templates, but published pages should set at least `
 - [Map of content](templates/map.md)
 - [Question](templates/question.md)
 - [Log entry](templates/log.md)
+- [Task report](templates/report.md)
 - [Architecture/spec note](templates/spec.md)
 
 ## Quality checklist

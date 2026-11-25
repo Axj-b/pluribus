@@ -17,6 +17,7 @@ last_reviewed: 2026-11-25
 | [Implementation](implementation.md) | See what exists in code, what is next, and how to verify it |
 | [Decisions](decisions.md) | Find why a choice was made and where it applies |
 | [Open questions](open-questions.md) | See what is still unknown, grouped by theme |
+| [Reports](reports.md) | Review task evidence, measurements and merge status |
 | [Knowledge](knowledge.md) | Browse atomic notes by domain and tag |
 
 Maps are maintained by hand. Tags are for retrieval; if a note is not reachable from a map, it is

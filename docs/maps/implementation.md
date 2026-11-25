@@ -103,3 +103,4 @@ See the [open-question map](open-questions.md), especially:
 ## Session history
 
 - [2026-11-25](../log/2026-11-25.md) — core model, scheduler, fabric framing.
+- [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.

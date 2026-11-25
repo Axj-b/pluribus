@@ -14,6 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
+- [Fabric session](../reports/fabric-session.md) — `task/fabric-session` — bootstrap handshake and sequenced sessions.
 - [Fabric transport](../reports/fabric-transport.md) — `task/fabric-transport` — blocking TCP, loopback and frame-stream transport with benchmarks.
 
 ## Approved

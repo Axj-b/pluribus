@@ -3,7 +3,9 @@ find_package(Threads REQUIRED)
 add_library(pluribusfabric STATIC
     src/frame.cpp
     src/frame_stream.cpp
+    src/handshake_codec.cpp
     src/loopback.cpp
+    src/session.cpp
 )
 add_library(pluribus::fabric ALIAS pluribusfabric)
 

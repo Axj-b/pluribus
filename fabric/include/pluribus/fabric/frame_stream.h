@@ -16,6 +16,8 @@ public:
 
     FrameStream(const FrameStream&) = delete;
     FrameStream& operator=(const FrameStream&) = delete;
+    FrameStream(FrameStream&&) noexcept = default;
+    FrameStream& operator=(FrameStream&&) noexcept = default;
 
     Result<void> write_frame(const Frame& frame);
     Result<std::optional<Frame>> read_frame();

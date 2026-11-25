@@ -37,12 +37,12 @@ unit-tested; ABI/runtime validation pending.**
 
 ## Current state
 
-- **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing and
-  blocking TCP transport.
-- **Next:** session handshake, payload codec decision, dependency enforcement, then a master
+- **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing,
+  blocking TCP transport, bootstrap handshake and session sequencing.
+- **Next:** payload codec decision, session replay/heartbeat, dependency enforcement, then a master
   registry/queue and node agent for the first `plu run hello`.
 - **Not started:** master, node, runtime backends, store, client, CLI.
-- **Tests:** 53 unit tests across core, scheduler and fabric; see
+- **Tests:** 57 unit tests across core, scheduler and fabric; see
   [Implementation map](maps/implementation.md).
 
 ## How this knowledge base works

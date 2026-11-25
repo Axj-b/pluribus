@@ -20,7 +20,11 @@ target_link_libraries(pluribus_core_tests PRIVATE
 )
 add_test(NAME core.unit COMMAND pluribus_core_tests)
 
-add_executable(pluribus_fabric_tests unit/fabric_tests.cpp unit/fabric_transport_tests.cpp)
+add_executable(pluribus_fabric_tests
+    unit/fabric_tests.cpp
+    unit/fabric_transport_tests.cpp
+    unit/fabric_session_tests.cpp
+)
 target_link_libraries(pluribus_fabric_tests PRIVATE
     pluribusfabric
     pluribus_test_support

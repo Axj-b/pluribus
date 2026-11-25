@@ -40,7 +40,9 @@ ctest --preset windows-gcc-debug
 ```
 
 On Linux use `linux-gcc-debug`; on macOS use `macos-appleclang-debug`.
-Warnings can be promoted to errors with `-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
+On Windows, `scripts\test-wsl.cmd` configures, builds and tests the Linux build inside WSL using
+the `wsl-gcc-debug` preset. Warnings can be promoted to errors with
+`-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
 
 The test harness is a deliberately dependency-free placeholder so the first
 targets build without a package manager. Replace or wrap it when the vcpkg

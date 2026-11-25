@@ -47,9 +47,8 @@ heterogeneity still requires real machines.
 ## Current state
 
 The repository uses a small dependency-free test harness while the vcpkg/GoogleTest baseline is
-undecided. Unit tests cover core, scheduler, fabric framing and transport. Integration/system
-harnesses do not
-exist yet.
+undecided. Unit tests cover core, scheduler, fabric framing and transport. Linux builds are exercised
+locally through WSL with `scripts\test-wsl.cmd`. Integration/system harnesses do not exist yet.
 
 ## Related
 

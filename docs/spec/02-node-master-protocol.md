@@ -1,3 +1,12 @@
+---
+title: "02. Node/master and client control protocol"
+type: spec
+id: spec-02
+status: draft
+tags: [spec, protocol, master, node]
+last_reviewed: 2026-11-25
+---
+
 # 02. Node/master and client control protocol
 
 This catalog defines logical messages, not a binary schema or C++ layout. The [wire specification](05-wire-protocol.md) defines framing, session sequences, retries and limits; [execution](01-execution-model.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [scheduler](07-scheduler-v1.md), [store](08-artifact-store-protocol.md), and [security](10-security-model.md) define domain semantics. The master is authoritative; nodes supervise local executions. Clients use the same control protocol as the CLI.
@@ -98,3 +107,10 @@ Responses include code, human-readable diagnostic and optional retry guidance an
 
 - Final message schema, numeric type assignments, endpoint-ticket format, authentication details and exact pagination limits depend on wire/serialization and security work.
 - Exact client identity, request deduplication retention and master-restart durability remain to be decided.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Master](../notes/master.md), [Node](../notes/node.md), [Fabric](../notes/fabric.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

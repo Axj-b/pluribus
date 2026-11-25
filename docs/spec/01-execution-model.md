@@ -1,3 +1,12 @@
+---
+title: "01. Execution model"
+type: spec
+id: spec-01
+status: draft
+tags: [spec, execution, lifecycle, state-machine]
+last_reviewed: 2026-11-25
+---
+
 # 01. Execution model
 
 Status: design specification for V1; exact API and encoding remain provisional. An execution is one run of a native Pluribus-compatible executable, not a domain-specific job. Pluribus is a uniform distributed execution environment, **not a Linux simulator**. Compatibility is determined by Pluribus ABI and CPU architecture, not host OS; the mechanism that makes this portable still requires prototyping. There is no CPU emulation in V1.
@@ -101,3 +110,10 @@ Unknown, stale, conflicting or unprovable reports are **orphans**. Apply configu
 - ExecutionId representation, owner identity/lifetime mechanism, orphan policy controls and retention durations require implementation design.
 - The portable native ABI mechanism and compatibility metadata validation require a prototype; cross-OS execution is not assumed to work merely because ABI and architecture labels match.
 - Precise exit-status portability and whether output-collection failures alter final execution outcome need specification.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Execution](../notes/execution.md), [Execution lifecycle](../notes/execution-lifecycle.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

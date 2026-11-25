@@ -1,3 +1,12 @@
+---
+title: "7. Cross-cutting concerns"
+type: architecture
+id: arch-07
+status: draft
+tags: [architecture, security, observability, performance, testing, configuration]
+last_reviewed: 2026-11-25
+---
+
 # 7. Cross-cutting concerns
 
 ## 7.1 Technology choices (V1)
@@ -94,3 +103,10 @@ precedence is CLI option > environment > user config > system/default config.
 
 Separate numbers: protocol version (wire), ABI version (runtime contract for apps), package format
 version. Handshake rejects incompatible protocol; scheduler filters by ABI.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Security](../notes/security.md), [Observability](../notes/observability.md), [Performance](../notes/performance.md), [Testing](../notes/testing.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

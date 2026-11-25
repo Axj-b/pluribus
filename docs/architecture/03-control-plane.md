@@ -1,3 +1,12 @@
+---
+title: "3. Control plane"
+type: architecture
+id: arch-03
+status: draft
+tags: [architecture, master, scheduler, health, failure]
+last_reviewed: 2026-11-25
+---
+
 # 3. Control plane (`pluribusmaster`)
 
 One authoritative master per Pluribus machine (V1). It does not execute applications unless the
@@ -103,3 +112,10 @@ returns without waiting.
 
 connect, submit execution, get handle, observe state, stream stdout/stderr, terminate/kill,
 resolve service, list nodes, list executions, list services. Nothing else is public in V1.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Master](../notes/master.md), [Scheduler](../notes/scheduler.md), [Execution lifecycle](../notes/execution-lifecycle.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,3 +1,12 @@
+---
+title: "09. Repository and CMake structure"
+type: spec
+id: spec-09
+status: draft
+tags: [spec, repository, build, cmake]
+last_reviewed: 2026-11-25
+---
+
 # 09. Repository and CMake structure
 
 This is the intended implementation structure, not a claim that these targets or build presets
@@ -143,3 +152,10 @@ already chosen. Audit all third-party dependencies and distribute their required
 - Select and publish the license; validate vcpkg and C++23 with the actual DRIVE OS SDK.
 - Pin compiler, dependency and preset versions and implement graph/include CI checks when the
   first build targets are added.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Repository structure](../notes/repository-structure.md), [Testing](../notes/testing.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

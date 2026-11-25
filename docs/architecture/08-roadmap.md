@@ -1,3 +1,12 @@
+---
+title: "8. Roadmap, layout and scope"
+type: architecture
+id: arch-08
+status: draft
+tags: [architecture, roadmap, milestones, repository, cli]
+last_reviewed: 2026-11-25
+---
+
 # 8. Roadmap, layout and scope
 
 ## Project scope
@@ -80,6 +89,9 @@ API; service model/lifecycle; wire protocol/reconnect/idempotency; node/runtime 
 artifact/store protocol; repository/CMake target structure; security model. See the
 [specification index](../README.md#specifications-in-priority-order).
 
+The docs are maintained as a linked second brain: see the [documentation home](../README.md), the
+[knowledge base guide](../knowledge-base.md), and the [implementation map](../maps/implementation.md).
+
 ## Prototypes
 
 | # | Prototype | Success criterion |
@@ -122,3 +134,10 @@ visualization services and let Pluribus place them.
 
 The answered questionnaire is a local, not committed source note; the decisions are captured in
 these documents and the [decision index](../README.md#decisions).
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Repository structure](../notes/repository-structure.md), [CLI](../notes/cli.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,3 +1,12 @@
+---
+title: "06. Node/runtime boundary"
+type: spec
+id: spec-06
+status: draft
+tags: [spec, node, runtime, backend, sandbox]
+last_reviewed: 2026-11-25
+---
+
 # 06. Node/runtime boundary
 
 Status: V1 design specification; C++ interfaces and configuration below are illustrative, not a
@@ -170,3 +179,10 @@ publication, readiness and byte-stream semantics are specified in [04](04-servic
   and process-tree guarantees require platform prototypes.
 - Fix concrete backend/local endpoint signatures, logging gap representation, retention defaults,
   and the supported environment variables when wire/API implementations exist.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Runtime](../notes/runtime.md), [Node](../notes/node.md), [Sandbox](../notes/sandbox.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

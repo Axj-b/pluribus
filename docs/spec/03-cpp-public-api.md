@@ -1,3 +1,12 @@
+---
+title: "03. C++23 public API"
+type: spec
+id: spec-03
+status: draft
+tags: [spec, api, cpp]
+last_reviewed: 2026-11-25
+---
+
 # 03. C++23 public API sketch
 
 Status: illustrative, **non-final** C++23 design; names, ownership, async integration and ABI are not frozen. The V1 public library is C++23, in `pluribus::`; there is no stable C ABI yet. Concepts deliberately avoid C++ implementation types and host handles so a later C ABI and Python, C# or Rust bindings can wrap the same operations. A language-neutral [control protocol](02-node-master-protocol.md) remains independent of C++ layout. See [execution](01-execution-model.md), [services](04-service-model.md), [wire](05-wire-protocol.md), [runtime boundary](06-node-runtime-boundary.md), [repository](09-repository-cmake-structure.md), and [security](10-security-model.md).
@@ -115,3 +124,10 @@ Keep public values self-contained, no templates involving third-party libraries,
 
 - Final type names, request ID generation and client identity, public construction/validation of specs, async executor/cancellation rules, thread safety and handle ownership need implementation design.
 - Exact log cursor, byte-buffer and stream shutdown APIs, error-code representation and C++ source/binary compatibility policy remain undecided.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [CLI](../notes/cli.md), [Execution](../notes/execution.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,3 +1,12 @@
+---
+title: "05. Wire protocol, retry and compatibility"
+type: spec
+id: spec-05
+status: draft
+tags: [spec, fabric, protocol, wire]
+last_reviewed: 2026-11-25
+---
+
 # 05. Wire protocol, retry and compatibility
 
 Status: proposed framing and semantics for interoperable V1 implementations; no payload serialization format has been selected. The [message catalog](02-node-master-protocol.md) specifies logical fields; [execution](01-execution-model.md), [C++ API](03-cpp-public-api.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [store](08-artifact-store-protocol.md) and [security](10-security-model.md) specify their domains. The wire is language-neutral, never a dump of C++ layouts. ABI compatibility for executables is Pluribus ABI plus CPU architecture, distinct from protocol version and not host-OS scheduling.
@@ -69,3 +78,10 @@ The documented language-neutral protocol is intended to become a stable contract
 - Serializer selection and benchmark results, bootstrap encoding, type/flag registry, data-plane frame formats and limits remain undecided.
 - Session/deduplication retention, canonical request fingerprint, client identity, durable master storage, authentication and ticket design require implementation decisions.
 - Exact compatible-version release policy and required conformance suite need to be established before the contract is declared stable.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Fabric](../notes/fabric.md), [Protocol versioning](../notes/protocol-versioning.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

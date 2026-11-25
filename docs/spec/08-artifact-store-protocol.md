@@ -1,3 +1,12 @@
+---
+title: "08. Artifact store and transfer"
+type: spec
+id: spec-08
+status: draft
+tags: [spec, store, artifacts, packages]
+last_reviewed: 2026-11-25
+---
+
 # 08. Artifact store and transfer
 
 Status: V1 contract and illustrative records; concrete serialization is governed by the
@@ -136,3 +145,10 @@ collector or replication guarantee is implied by V1.
   message schemas, and retention/lease durations alongside wire protocol implementation.
 - Prototype the cross-host native ABI and how a single ABI/architecture package key maps to
   executable bits without introducing host OS as a scheduling dimension.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Artifact store](../notes/artifact-store.md), [Packages](../notes/package.md), [Workspace cache](../notes/workspace-cache.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

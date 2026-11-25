@@ -1,3 +1,12 @@
+---
+title: "5. Fabric and services"
+type: architecture
+id: arch-05
+status: draft
+tags: [architecture, fabric, services, networking]
+last_reviewed: 2026-11-25
+---
+
 # 5. Fabric and services
 
 ## 5.1 `pluribusfabric`
@@ -102,3 +111,10 @@ Decision (Q-6, Q-35): Connect, submit, handle (state/wait/terminate/kill/logs), 
 service via a C++23 client library in `pluribus::` and a documented language-neutral wire protocol.
 The CLI uses the public interface; protocol schemas do not expose C++ types or class layouts. No
 stable C ABI is required initially; avoid implementation-specific public types to permit later bindings.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Fabric](../notes/fabric.md), [Services](../notes/service.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

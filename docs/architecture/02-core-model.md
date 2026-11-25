@@ -1,3 +1,12 @@
+---
+title: "2. Core model"
+type: architecture
+id: arch-02
+status: draft
+tags: [architecture, core, ids, execution, node, services]
+last_reviewed: 2026-11-25
+---
+
 # 2. Core model (`pluribuscore`)
 
 `pluribuscore` holds platform-independent definitions with nearly zero runtime policy. It MUST NOT
@@ -136,3 +145,10 @@ Decision (Q-15): Benchmark FlatBuffers, Cap'n Proto and Protocol Buffers with re
 messages before choosing serialization. Rules: explicit protocol version in every
 connection handshake, forward-compatible field evolution, message-size limits, no host-specific
 types in schemas.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Execution](../notes/execution.md), [Execution lifecycle](../notes/execution-lifecycle.md), [Node](../notes/node.md), [Services](../notes/service.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,3 +1,12 @@
+---
+title: "07. Scheduler V1"
+type: spec
+id: spec-07
+status: draft
+tags: [spec, scheduler]
+last_reviewed: 2026-11-25
+---
+
 # 07. Scheduler V1
 
 This document defines a deterministic V1 scheduling policy. The scheduler is a pure function;
@@ -139,3 +148,10 @@ the result is fundamental incompatibility and the master applies its queue/fail 
 - Select deployment defaults for reservations and measurement freshness; validate this deliberately
   conservative accounting against real workloads before introducing resource enforcement.
 - Define any future locality or historical-profile policy without silently changing V1 ordering.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Scheduler](../notes/scheduler.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

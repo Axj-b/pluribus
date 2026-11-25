@@ -1,3 +1,12 @@
+---
+title: "4. Node and runtime"
+type: architecture
+id: arch-04
+status: draft
+tags: [architecture, node, runtime, sandbox, backend]
+last_reviewed: 2026-11-25
+---
+
 # 4. Node agent and runtime
 
 ## 4.1 `pluribusnode`
@@ -112,3 +121,10 @@ privilege separation.
   (initially about 10 MiB per execution, master-configurable), replay to late subscribers then stream live.
   Applications need no Pluribus-specific logging.
 - Signals: Pluribus defines `terminate` and `kill` only; mapped per host.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Node](../notes/node.md), [Runtime](../notes/runtime.md), [Sandbox](../notes/sandbox.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,3 +1,12 @@
+---
+title: "04. Service model"
+type: spec
+id: spec-04
+status: draft
+tags: [spec, services, lifecycle]
+last_reviewed: 2026-11-25
+---
+
 # 04. Service model
 
 A service is a location-independent communication name such as `radarscape/sar/output`, not a physical socket address. The master owns the registry. A service can be exported by a finite or persistent execution; its lifetime is bounded by that execution. See [execution](01-execution-model.md), [control messages](02-node-master-protocol.md), [C++ API](03-cpp-public-api.md), [wire](05-wire-protocol.md), [runtime boundary](06-node-runtime-boundary.md), and [security](10-security-model.md).
@@ -67,3 +76,10 @@ Both the preferred C++ API and a documented language-neutral **local endpoint** 
 
 - Exact service-name grammar, local endpoint protocol, route authorization/ticket format, and V1 duplicate-provider policy need to be fixed before interoperability.
 - Readiness revalidation mechanism, shutdown/drain behavior and provider health semantics beyond explicit readiness remain to be designed.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Services](../notes/service.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

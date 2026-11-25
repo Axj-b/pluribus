@@ -1,3 +1,12 @@
+---
+title: "10. Security model"
+type: spec
+id: spec-10
+status: draft
+tags: [spec, security]
+last_reviewed: 2026-11-25
+---
+
 # 10. Security model
 
 ## Boundary and assumptions
@@ -108,3 +117,10 @@ for readiness, registration and byte-stream semantics.
   per-platform filesystem/IPC mechanisms as implementation and protocol choices mature.
 - Define and validate a hard isolation threat model before permitting untrusted workloads or
   claiming the sandbox is a security boundary.
+
+## Knowledge base links
+
+- Map: [Specification map](../maps/specifications.md)
+- Notes: [Security](../notes/security.md), [Sandbox](../notes/sandbox.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

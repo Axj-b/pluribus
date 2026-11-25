@@ -1,3 +1,11 @@
+---
+type: idea
+id: workspace-cache
+status: proposed
+tags: [idea, store, workspace, cache]
+last_reviewed: 2026-11-25
+---
+
 # Pluribus Content-Addressed Workspace Cache
 
 ## Goal
@@ -83,3 +91,10 @@ This idea extends `pluribusstore` and the artifact model described in
 `docs/architecture/06-store-and-packaging.md` and `docs/spec/08-artifact-store-protocol.md`, adding
 workspace trees/snapshots and explicit missing-blob negotiation before execution. When adopting it,
 update those documents rather than treating this note as committed design.
+
+## Knowledge base links
+
+- Note: [Workspace cache](../docs/notes/workspace-cache.md)
+- Artifact model: [Artifact store](../docs/notes/artifact-store.md)
+- Open question: [OI-26 Workspace snapshot adoption](../docs/questions/README.md#oi-26-workspace-snapshot-adoption)
+- Store spec: [Artifact store protocol](../docs/spec/08-artifact-store-protocol.md)

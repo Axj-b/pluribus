@@ -1,3 +1,12 @@
+---
+title: "1. Overview"
+type: architecture
+id: arch-01
+status: draft
+tags: [architecture, overview, vision, glossary]
+last_reviewed: 2026-11-25
+---
+
 # 1. Overview
 
 ## 1.1 Vision
@@ -124,3 +133,10 @@ flowchart LR
 
 Decision (Q-3): Package compatibility is Pluribus ABI plus CPU architecture, not host OS. Achieving
 that contract across hosts requires runtime/ABI prototyping; it is not established by this document.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Execution](../notes/execution.md), [Execution lifecycle](../notes/execution-lifecycle.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

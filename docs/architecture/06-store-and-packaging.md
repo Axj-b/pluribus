@@ -1,3 +1,12 @@
+---
+title: "6. Store and packaging"
+type: architecture
+id: arch-06
+status: draft
+tags: [architecture, store, artifacts, packages]
+last_reviewed: 2026-11-25
+---
+
 # 6. Store and packaging
 
 ## 6.1 `pluribusstore`
@@ -72,3 +81,10 @@ an exact package version. Node-local PATH lookup is not part of normal execution
 
 Execution inputs are fully specified by hashes + args + env, enabling deterministic inputs and,
 later, result caching (memoization) — not in V1 but the model must not preclude it.
+
+## Knowledge base links
+
+- Map: [Architecture map](../maps/architecture.md)
+- Notes: [Artifact store](../notes/artifact-store.md), [Packages](../notes/package.md), [Workspace cache](../notes/workspace-cache.md)
+- Decisions: [Decision records](../decisions/README.md), [Decision map](../maps/decisions.md)
+- Open questions: [Open questions register](../questions/README.md)

@@ -1,2 +1,9 @@
 # Local interaction files (questionnaires, feedback, scratch notes). Not committed.
 interactions/
+
+# Build output.
+build/
+out/
+.vs/
+.cache/
+compile_commands.json

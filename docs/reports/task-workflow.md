@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-task-workflow
-status: review
+status: merged
 task: Task workflow scaffold
 branch: chore/task-workflow
 base: dev
+merged_into: dev
+merged_at: 2026-11-25
 date: 2026-11-25
 tags: [report, process, workflow]
 last_reviewed: 2026-11-25
@@ -25,7 +27,7 @@ the reports index/map and a reproducible documentation link checker.
 - **Base:** `dev` (created from the current `master` at `72bce85`)
 - **Commits:** see `git log --oneline dev..HEAD`
 - **Date:** 2026-11-25
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

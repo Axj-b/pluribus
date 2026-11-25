@@ -14,15 +14,15 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- [Task workflow scaffold](../reports/task-workflow.md) — `chore/task-workflow` — branch/report workflow and templates.
+- None.
 
 ## Approved
 
-- None yet.
+- None.
 
 ## Merged
 
-- None yet.
+- [Task workflow scaffold](../reports/task-workflow.md) — `chore/task-workflow` — branch/report workflow and templates.
 
 ## How to use reports
 

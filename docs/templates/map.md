@@ -19,7 +19,7 @@ last_reviewed: {{YYYY-MM-DD}}
 ### {{Group}}
 
 - Note — `../notes/...`
-- Decision — `../decisions/Q-..md`
+- Decision — `../decisions/<theme>.md#q-n`
 - Question — `../questions/README.md#oi-...`
 
 ## Canonical sources

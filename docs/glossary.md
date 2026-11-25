@@ -14,7 +14,7 @@ last_reviewed: 2026-11-25
 | Term | Meaning | Canonical source |
 |---|---|---|
 | ABI (Pluribus ABI) | Runtime/executable compatibility contract; combined with CPU architecture for scheduling. Not the wire protocol or host OS. | [Runtime boundary](spec/06-node-runtime-boundary.md#abi-identity-and-configuration), [Packaging](architecture/06-store-and-packaging.md#65-packages-plp) |
-| ADR | Architecture decision record. Here: a short note in [`decisions/`](decisions/README.md) with status, decision and links. | [Decision records](decisions/README.md) |
+| ADR | Architecture decision record. Here: a `Q-N` section inside one of the six themed files in [`decisions/`](decisions/README.md), with the decision text and a link to where it applies. | [Decision records](decisions/README.md) |
 | Artifact | Immutable content-addressed blob, identified by `sha256:<digest>`. | [Artifact store](spec/08-artifact-store-protocol.md) |
 | Capability | Qualitative node feature with an extensible name, e.g. `gpu.cuda` or `target.thor`. Not a quantitative resource. | [Node descriptor](architecture/02-core-model.md#25-nodedescriptor) |
 | Control plane | Small messages: registration, heartbeat, submit, assignment, state, services, terminate. | [Fabric](architecture/05-fabric-and-services.md) |

@@ -1,39 +1,27 @@
 ---
-type: decision
-id: Q-{{NN}}
-status: accepted
-tags: [decision]
-source: "../{{path}}"
-last_reviewed: {{YYYY-MM-DD}}
+type: template
+id: template-decision
+status: active
+tags: [template, decision]
+last_reviewed: 2026-11-25
 ---
 
-# Q-{{NN}} — {{Decision title}}
+# Decision section template
 
-## Decision
+Use this inside one of the themed files in [`decisions/`](../decisions/README.md), then add an index
+row to [`decisions/README.md`](../decisions/README.md) and a link in the
+[decision map](../maps/decisions.md).
 
-{{One or two sentences. This is the canonical decision text.}}
+## Q-{{NN}}
 
-## Context
+**Decision.** {{One or two sentences. This is the canonical decision text.}}
 
-{{What forced the choice? What constraints or alternatives mattered?}}
+**Applies to.** {{Canonical document}} — `../{{path}}`
 
-## Consequences
+**Context.** {{What forced the choice? What constraints or alternatives mattered?}}
+
+**Consequences.**
 
 - **Positive:**
 - **Negative / costs:**
 - **Follow-up:**
-
-## Where it applies
-
-- {{Canonical document}} — `../{{path}}`
-
-## Links
-
-- [Decision records index](../decisions/README.md)
-- [Decision map](../maps/decisions.md)
-- Affected note — `../notes/...`
-
-## Supersession
-
-- Supersedes: none
-- Superseded by: none

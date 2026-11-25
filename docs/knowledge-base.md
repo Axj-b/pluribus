@@ -33,7 +33,7 @@ single question or to see what is still undecided. The second-brain layer adds:
 | Maps of content | [`maps/`](maps/README.md) | Curated routes through the knowledge | No |
 | Notes | [`notes/`](notes/README.md) | Atomic concept summaries | No; links to canonical docs |
 | Canonical design | [`architecture/`](architecture/01-overview.md), [`spec/`](spec/01-execution-model.md) | Architecture and specifications | **Yes** |
-| Decisions | [`decisions/`](decisions/README.md) | ADR-style accepted decisions | **Yes** for decision text |
+| Decisions | [`decisions/`](decisions/README.md) | Themed ADR-style decision files | **Yes** for decision text |
 | Questions | [`questions/`](questions/README.md) | Open-issue register | **Yes** for status |
 | Log | [`log/`](log/README.md) | Session journal and progress | No |
 | Templates | [`templates/`](templates/note.md) | Creation templates | No |
@@ -139,7 +139,7 @@ All fields are optional for templates, but published pages should set at least `
 |---|---|---|
 | Map | `kebab-case.md` | `implementation.md` |
 | Note | `kebab-case.md` | `execution-lifecycle.md` |
-| Decision | `Q-NN.md` | `Q-07.md` |
+| Decision | `theme.md#q-n` | `execution.md#q-10` |
 | Question | `OI-NN` entry | `OI-01` |
 | Log | `YYYY-MM-DD.md` | `2026-11-25.md` |
 | Template | `type.md` | `decision.md` |
@@ -162,7 +162,8 @@ All fields are optional for templates, but published pages should set at least `
 
 ### Record a decision
 
-1. Create `decisions/Q-NN.md` from [`templates/decision.md`](templates/decision.md).
+1. Add a `Q-N` section to the relevant themed file in [`decisions/`](decisions/README.md), using
+   [`templates/decision.md`](templates/decision.md) as a guide.
 2. Add the row to [`decisions/README.md`](decisions/README.md) and the theme in
    [`maps/decisions.md`](maps/decisions.md).
 3. Link the affected note and spec.

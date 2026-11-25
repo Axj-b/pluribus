@@ -14,7 +14,7 @@ last_reviewed: {{YYYY-MM-DD}}
 - **Why it matters:**
 - **Options / constraints:**
 - **Next action:**
-- **Decision record when resolved:** [ ] `../decisions/Q-...md`
+- **Decision record when resolved:** [ ] `../decisions/<theme>.md#q-n`
 - **Related notes:**
 
 When resolved, change status to `resolved`, link the decision or spec section, and update the

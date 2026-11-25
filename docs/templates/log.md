@@ -28,7 +28,7 @@ last_reviewed: {{YYYY-MM-DD}}
 
 ## Decisions and questions
 
-- Decision: `../decisions/Q-...md`
+- Decision: `../decisions/<theme>.md#q-n`
 - Question: OI-... — `../questions/README.md#oi-...`
 
 ## Next actions

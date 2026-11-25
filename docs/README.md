@@ -95,9 +95,10 @@ Decision (Q-46): Develop these planned specifications in order, then implement t
 
 ## Decisions
 
-All 46 accepted project decisions now have short ADR-style records. The canonical, ordered index is
+All 46 accepted project decisions are grouped into six themed files. The canonical, ordered index is
 [Decision records](decisions/README.md); a thematic view is the [Decision map](maps/decisions.md).
-Each record links to the architecture/specification document where the decision applies.
+Each section keeps its stable `Q-N` ID and links to the architecture/specification document where the
+decision applies.
 
 ## Open questions
 

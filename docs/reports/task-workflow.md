@@ -33,8 +33,10 @@ the reports index/map and a reproducible documentation link checker.
 - Added [`docs/reports/README.md`](../reports/README.md) as the per-task report index.
 - Added [`docs/templates/report.md`](../templates/report.md) for task evidence and review.
 - Added [`docs/maps/reports.md`](../maps/reports.md) as the reports map.
-- Added [`tools/check-docs.ps1`](../../tools/check-docs.ps1) to verify relative links and local
-  anchors across the docs.
+- Added [`scripts/check-docs.ps1`](../../scripts/check-docs.ps1) and
+  [`scripts/check-docs.cmd`](../../scripts/check-docs.cmd) to verify relative links and local
+  anchors. Both are parameterless and resolve the repository from their own location.
+- Added [`scripts/README.md`](../../scripts/README.md) documenting the available scripts.
 - Updated the documentation home, knowledge-base guide, maps index and implementation log to point
   at the new report workflow.
 - Kept the canonical architecture/spec documents authoritative; task evidence lives separately in
@@ -46,14 +48,14 @@ the reports index/map and a reproducible documentation link checker.
 |---|---|---|
 | Branch | `git branch --show-current` | `chore/task-workflow` |
 | Base branch | `git merge-base --is-ancestor dev HEAD` | pass |
-| Documentation links and anchors | `pwsh -File tools/check-docs.ps1` | see result below |
+| Documentation links and anchors | `scripts\check-docs.cmd` | see result below |
 | Unit tests | `ctest --preset windows-gcc-debug` | 3/3 targets passed |
 | Working tree | `git status --short` | clean after commit |
 
 Documentation check result:
 
 ```text
-Checked 74 Markdown files: 1110 relative links and 369 local anchors resolve.
+Checked 74 Markdown files: 1112 relative links and 369 local anchors resolve.
 ```
 
 ## Measurements and benchmarks
@@ -61,7 +63,7 @@ Checked 74 Markdown files: 1110 relative links and 369 local anchors resolve.
 **Not applicable — this is a process/documentation change, not a performance change.**
 
 The only quantitative check is the documentation validation pass: number of Markdown files,
-relative links and local anchors checked by `tools/check-docs.ps1`.
+relative links and local anchors checked by `scripts/check-docs.ps1` and `scripts/check-docs.cmd`.
 
 ## Risks and limitations
 
@@ -70,8 +72,8 @@ relative links and local anchors checked by `tools/check-docs.ps1`.
 - The report workflow adds a small amount of overhead per task.
 - Reports can go stale if a task continues after the report is written; update the report on every
   material change before asking for review.
-- `tools/check-docs.ps1` uses an approximate GitHub heading slugger; unusual heading punctuation may
-  need adjustment.
+- `scripts/check-docs.ps1` uses an approximate GitHub heading slugger; unusual heading punctuation
+  may need adjustment.
 
 ## Follow-up work
 
@@ -86,7 +88,7 @@ relative links and local anchors checked by `tools/check-docs.ps1`.
 - [ ] The branch is created from `dev`, not from `master`.
 - [ ] `AGENTS.md` captures the branch/report/review rules correctly.
 - [ ] The reports index, map and template are usable.
-- [ ] `pwsh -File tools/check-docs.ps1` passes.
+- [ ] `scripts\check-docs.cmd` and `pwsh -File scripts/check-docs.ps1` pass.
 - [ ] The report matches the actual diff.
 - [ ] No build output, secrets or host-specific paths are committed.
 - [ ] `dev` and `master` were not modified directly.

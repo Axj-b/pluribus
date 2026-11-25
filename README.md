@@ -54,7 +54,7 @@ core/               platform-independent model and contracts
 fabric/             control framing and transport
 master/scheduler/   pure scheduling policy
 tests/              unit tests and test support
-tools/              repository checks and developer scripts
+scripts/            parameterless repository checks and developer scripts
 cmake/              compiler options and shared CMake helpers
 docs/               architecture, specifications, second-brain layer and task reports
 ```

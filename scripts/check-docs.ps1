@@ -1,9 +1,9 @@
-#requires -Version 7.0
-param(
-    [string]$RepositoryRoot = (Split-Path -Parent $PSScriptRoot)
-)
+#requires -Version 5.1
 
 $ErrorActionPreference = 'Stop'
+
+# Parameterless by design: run this script from anywhere and it checks this repository.
+$RepositoryRoot = Split-Path -Parent $PSScriptRoot
 
 $docsRoot = Join-Path $RepositoryRoot 'docs'
 $files = @()

@@ -11,6 +11,8 @@ These rules apply to every coding task in this repository.
   - `chore/<short-slug>` for tooling, documentation or process work.
 - State the branch name and intended scope at the start of the task.
 - Commit task work on the task branch. Do not merge or push unless the user asks.
+- Put developer scripts in `scripts/`. They must be parameterless and self-locating so they can be
+  triggered directly from PowerShell or `cmd`.
 
 ## Task completion report
 
@@ -52,7 +54,8 @@ Use the report frontmatter:
 ## Verification rules
 
 - Run the narrowest relevant tests, then the full suite when practical.
-- For documentation or process changes, run `pwsh -File tools/check-docs.ps1`.
+- For documentation or process changes, run `pwsh -File scripts/check-docs.ps1` or
+  `scripts\check-docs.cmd`.
 - Record the exact preset/command and the pass/fail result.
 - Measure before and after when changing performance-sensitive code; include environment details.
 - Check `git status` before calling the task ready for review.

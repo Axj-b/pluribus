@@ -60,6 +60,30 @@ should be automated as regression tests.
 - Fault injection: kill node, drop connection, slow data plane (verify terminate not blocked).
 - Fake/in-memory transport to keep the state machine tests deterministic.
 
+### 7.5.1 Multi-node on one host (loopback system tests)
+
+Several `pluribusnode` processes plus one `pluribusmaster` run as separate processes on one machine.
+Each node instance needs its own:
+
+| Aspect | Requirement |
+|--------|-------------|
+| Identity | Separate persisted `NodeId` (UUID) and node name; therefore a separate config/state directory per instance |
+| Config | Separate TOML file with its own cache location and sandbox root, so nodes never share artifacts or execution directories |
+| Connection | Own control connection dialed to the master; no extra ports needed unless the node exposes a service endpoint, in which case each needs a distinct port or local endpoint name |
+
+Caveats:
+- **Resource reporting:** all nodes see the same host CPU/RAM, so reports overlap. Scheduler tests
+  use a config override that declares a smaller fake capacity per node.
+- **Capabilities:** give each test node different config-defined capabilities (e.g. `target.thor`)
+  to exercise placement.
+- **Routing:** nodes on one host still communicate through the fabric, not the same-node shortcut,
+  so these tests exercise the cross-node paths. The same-node shortcut needs its own test.
+- **Not covered:** real heterogeneity (different OSes, CPU architectures, networks) still requires
+  real machines.
+
+The test harness should create a temporary directory per node (config, state, cache, sandbox),
+allocate free ports, start and stop processes, and clean up on failure.
+
 ## 7.6 Configuration
 
 Master and node use TOML configuration (Q-22). Contents: bind interface, master address, node

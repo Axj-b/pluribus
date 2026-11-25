@@ -127,7 +127,9 @@ backpressure and security/path cases. `ctest --preset <preset>` should run the c
 registered tests after `cmake --preset <preset>` and `cmake --build --preset <preset>` once presets
 exist. CI runs enforcement, unit/component and loopback tests on supported hosts; cross builds and
 hardware tests run when the DRIVE SDK/hardware are available. No build/test success is implied by
-this design document.
+this design document. Per-node isolation rules for multi-node-on-one-host tests (own config, state,
+cache, sandbox root, identity, fake capacity, distinct service endpoints) are in
+[cross-cutting §7.5.1](../architecture/07-cross-cutting.md#751-multi-node-on-one-host-loopback-system-tests).
 
 ## License and attribution
 

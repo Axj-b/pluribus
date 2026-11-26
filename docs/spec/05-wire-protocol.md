@@ -9,7 +9,7 @@ last_reviewed: 2026-11-25
 
 # 05. Wire protocol, retry and compatibility
 
-Status: proposed framing and semantics for interoperable V1 implementations; no payload serialization format has been selected. The [message catalog](02-node-master-protocol.md) specifies logical fields; [execution](01-execution-model.md), [C++ API](03-cpp-public-api.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [store](08-artifact-store-protocol.md) and [security](10-security-model.md) specify their domains. The wire is language-neutral, never a dump of C++ layouts. ABI compatibility for executables is Pluribus ABI plus CPU architecture, distinct from protocol version and not host-OS scheduling.
+Status: proposed framing and semantics for interoperable V1 implementations; V1 control payloads use Protocol Buffers (Q-47), while the complete schema and numeric type registry are not yet frozen. The [message catalog](02-node-master-protocol.md) specifies logical fields; [execution](01-execution-model.md), [C++ API](03-cpp-public-api.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [store](08-artifact-store-protocol.md) and [security](10-security-model.md) specify their domains. The wire is language-neutral, never a dump of C++ layouts. ABI compatibility for executables is Pluribus ABI plus CPU architecture, distinct from protocol version and not host-OS scheduling.
 
 ## Connections and framing
 
@@ -60,6 +60,12 @@ sequenceDiagram
 Bound queues, replay buffers and history. Apply flow control per data connection; slow consumers cannot cause unbounded node/master memory or block control reads, heartbeats, terminate and kill behind bulk data. Producers must await capacity, or receive explicit overflow/disconnection errors; log history eviction must produce a visible cursor gap. Prioritize control processing without promising hard real-time latency. Limit outstanding requests and watch subscriptions, reject malformed or oversized input, and prevent path traversal when handling materialized paths. Never assume a join token encrypts or authenticates traffic against an active network attacker.
 
 ## Serialization benchmark and selection
+
+**V1 decision (2026-11-26):** Protocol Buffers is selected for V1 control payloads in
+[Q-47](../decisions/fabric-services.md#q-47), based on the [codec benchmark
+report](../reports/codec-benchmark.md). Cap'n Proto and FlatBuffers remain candidates for a future
+major change, not V1. The Protobuf schemas, numeric type registry and flags are still provisional and
+must not be treated as a frozen wire contract.
 
 Benchmark **FlatBuffers, Cap'n Proto and Protocol Buffers** using equivalent, versioned schema definitions and realistic payload distributions. No candidate wins merely due to popularity. Fix representative small and larger cases: Hello/register and NodeDescriptor with capabilities/resources; heartbeat; submit with args/environment, labels, constraints and artifacts; assignment and state event; service readiness/resolve/watch; error; artifact location query/response. Include typical and high-percentile counts and strings, as well as schema evolution/unknown-field cases. Data-plane bulk throughput is measured separately and must not dominate the control-format decision.
 

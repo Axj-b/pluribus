@@ -107,6 +107,24 @@
       }
     },
     {
+      "name": "wsl-codec-bench",
+      "displayName": "WSL Codec Benchmark (Unix Makefiles)",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "generator": "Unix Makefiles",
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      },
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_CXX_COMPILER": "g++",
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
+        "PLURIBUS_BUILD_TESTS": "OFF",
+        "PLURIBUS_BUILD_CODEC_BENCH": "ON"
+      }
+    },
+    {
       "name": "macos-appleclang-debug",
       "displayName": "macOS AppleClang Debug",
       "inherits": "base",
@@ -145,6 +163,10 @@
     {
       "name": "wsl-gcc-release",
       "configurePreset": "wsl-gcc-release"
+    },
+    {
+      "name": "wsl-codec-bench",
+      "configurePreset": "wsl-codec-bench"
     },
     {
       "name": "macos-appleclang-debug",

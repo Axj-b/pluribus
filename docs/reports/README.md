@@ -28,6 +28,7 @@ See [AGENTS.md](../../AGENTS.md) for the branch and review workflow.
 
 | Task | Branch | Status | Date |
 |---|---|---|---|
+| [Codec benchmark](codec-benchmark.md) | `task/codec-benchmark` | review | 2026-11-26 |
 | [Fabric session](fabric-session.md) | `task/fabric-session` | review | 2026-11-25 |
 | [Fabric transport](fabric-transport.md) | `task/fabric-transport` | review | 2026-11-25 |
 | [Open question guidance](open-question-guidance.md) | `chore/open-question-guidance` | merged | 2026-11-25 |

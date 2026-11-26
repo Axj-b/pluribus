@@ -41,8 +41,7 @@ last_reviewed: 2026-11-25
 
 ### Now
 
-1. **Wire payload codec decision**: benchmark FlatBuffers, Cap'n Proto and Protobuf on representative
-   control messages before freezing a schema. Replace the provisional bootstrap codec when selected.
+1. **Define the versioned Protobuf control schemas** and replace the provisional bootstrap codec.
 2. **Session replay/resume and heartbeat**: acks, replay buffers, gap recovery, heartbeat cadence.
 3. **Dependency enforcement**: add a configure/CI check that compares the CMake target graph to the
    allowlist in [Spec 09](../spec/09-repository-cmake-structure.md#mechanical-enforcement).
@@ -104,4 +103,5 @@ See the [open-question map](open-questions.md), especially:
 - [2026-11-25](../log/2026-11-25.md) - core model, scheduler, fabric framing.
 - [Fabric transport report](../reports/fabric-transport.md) - blocking TCP, loopback and frame stream.
 - [Fabric session report](../reports/fabric-session.md) - bootstrap handshake and sequenced sessions.
+- [Codec benchmark report](../reports/codec-benchmark.md) - Protocol Buffers selected for V1 control.
 - [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.

@@ -181,14 +181,15 @@ last_reviewed: 2026-11-25
 
 ## OI-14 Serializer selection
 
-- **Status:** open
+- **Status:** resolved
 - **Source:** [Wire protocol](../spec/05-wire-protocol.md#serialization-benchmark-and-selection), [Q-15](../decisions/fabric-services.md#q-15)
 - **Question:** Which wire codec should carry control messages?
 - **Explanation:** The codec affects encoded size, decode latency, allocations, schema evolution, tooling and cross-language support. The spec explicitly requires a benchmark rather than choosing by popularity. Data-plane throughput must not dominate a control-message decision.
-- **Suggested behavior (proposal):** Benchmark FlatBuffers, Cap’n Proto and Protocol Buffers on the documented message mix and select one codec for all control traffic. Provisional default: Protocol Buffers, because its schema evolution, tooling and cross-language support are strong; switch only if the benchmark shows a decisive advantage for another option on bounded decode/latency/allocations. Pin generated-code versions and test unknown-field behavior before freezing payloads.
-- **Trade-offs:** Protobuf adds generated code and copies; FlatBuffers/Cap’n Proto can reduce decode cost but add schema/tooling constraints. A single codec keeps the protocol simpler than mixing.
-- **Confidence:** medium
-- **Next action:** Build the benchmark harness and record the decision as a new Q record before defining payloads.
+- **Suggested behavior (proposal):** Benchmark FlatBuffers, Cap'n Proto and Protocol Buffers on the documented message mix and select one codec for all control traffic. Provisional default: Protocol Buffers, because its schema evolution, tooling and cross-language support are strong; switch only if the benchmark shows a decisive advantage for another option on bounded decode/latency/allocations. Pin generated-code versions and test unknown-field behavior before freezing payloads.
+- **Trade-offs:** Protobuf adds generated code and copies; FlatBuffers/Cap'n Proto can reduce decode cost but add schema/tooling constraints. A single codec keeps the protocol simpler than mixing.
+- **Confidence:** high
+- **Resolution:** Protocol Buffers selected for V1 control payloads in [Q-47](../decisions/fabric-services.md#q-47). See the [codec benchmark report](../reports/codec-benchmark.md).
+- **Next action:** Define the versioned Protobuf control schemas, generate code, and replace the provisional bootstrap codec.
 - **Related:** [Fabric](../notes/fabric.md), [Protocol versioning](../notes/protocol-versioning.md)
 
 ## OI-15 Data-plane framing and limits

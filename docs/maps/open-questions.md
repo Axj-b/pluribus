@@ -26,11 +26,10 @@ last_reviewed: 2026-11-25
 
 - [OI-06 Control message schema and type registry](../questions/README.md#oi-06-control-message-schema-and-type-registry) — payload schemas and numeric IDs.
 - [OI-07 Endpoint tickets and route authorization](../questions/README.md#oi-07-endpoint-tickets-and-route-authorization) — service routing capabilities.
-- [OI-09 Request deduplication and durable master state](../questions/README.md#oi-09-request-deduplication-and-durable-master-state) — retry safety.
-- [OI-14 Serializer selection](../questions/README.md#oi-14-serializer-selection) — codec benchmark and choice.
-- [OI-15 Data-plane framing and limits](../questions/README.md#oi-15-data-plane-framing-and-limits) — bulk transfer bounds.
-- [OI-16 Wire compatibility and conformance](../questions/README.md#oi-16-wire-compatibility-and-conformance) — evolution tests.
-- [OI-25 Network stack selection](../questions/README.md#oi-25-network-stack-selection) — TCP/async stack.
+- [OI-09 Request deduplication and durable master state](../questions/README.md#oi-09-request-deduplication-and-durable-master-state) - retry safety.
+- [OI-15 Data-plane framing and limits](../questions/README.md#oi-15-data-plane-framing-and-limits) - bulk transfer bounds.
+- [OI-16 Wire compatibility and conformance](../questions/README.md#oi-16-wire-compatibility-and-conformance) - evolution tests.
+- [OI-25 Network stack selection](../questions/README.md#oi-25-network-stack-selection) - TCP/async stack.
 
 ## Identity, authorization and security
 
@@ -63,6 +62,10 @@ last_reviewed: 2026-11-25
 - [OI-21 License and platform validation](../questions/README.md#oi-21-license-and-platform-validation) — publication and DRIVE OS.
 - [OI-22 Dependency enforcement and toolchain pinning](../questions/README.md#oi-22-dependency-enforcement-and-toolchain-pinning) — make boundaries real.
 - [OI-27 Test and dependency baseline](../questions/README.md#oi-27-test-and-dependency-baseline) — vcpkg/GoogleTest decision.
+
+## Resolved
+
+- [OI-14 Serializer selection](../questions/README.md#oi-14-serializer-selection) - resolved by [Q-47](../decisions/fabric-services.md#q-47); Protocol Buffers selected for V1 control payloads.
 
 ## Related
 

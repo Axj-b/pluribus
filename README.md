@@ -24,9 +24,9 @@ slice is in place:
 | `pluribusscheduler` | Pure V1 scheduler policy with exact integer/rational scoring |
 | tests | Unit tests for the core model, fabric framing/transport/session and the documented scheduler cases |
 
-Not implemented yet: session replay/resume, heartbeat, payload serialization, async transport stack,
-`pluribusmaster`, `pluribusnode`, `pluribussim` backends, artifact store, public C++ client, and the
-`plu` CLI. The wire serialization format and runtime ABI remain open design decisions.
+Not implemented yet: Protobuf control schemas, session replay/resume, heartbeat, async transport
+stack, `pluribusmaster`, `pluribusnode`, `pluribussim` backends, artifact store, public C++ client,
+and the `plu` CLI. The runtime ABI remains an open design decision.
 
 ## Build and test
 
@@ -41,8 +41,8 @@ ctest --preset windows-gcc-debug
 
 On Linux use `linux-gcc-debug`; on macOS use `macos-appleclang-debug`.
 On Windows, `scripts\test-wsl.cmd` configures, builds and tests the Linux build inside WSL using
-the `wsl-gcc-debug` preset. Warnings can be promoted to errors with
-`-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
+the `wsl-gcc-debug` preset. `scripts\bench-codec.cmd` builds and runs the codec benchmark in WSL.
+Warnings can be promoted to errors with `-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
 
 The test harness is a deliberately dependency-free placeholder so the first
 targets build without a package manager. Replace or wrap it when the vcpkg
@@ -55,6 +55,7 @@ core/               platform-independent model and contracts
 fabric/             control framing and transport
 master/scheduler/   pure scheduling policy
 tests/              unit tests, transport benchmarks and test support
+benchmarks/         standalone codec benchmarks and schemas
 scripts/            parameterless repository checks and developer scripts
 cmake/              compiler options and shared CMake helpers
 docs/               architecture, specifications, second-brain layer and task reports

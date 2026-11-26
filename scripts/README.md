@@ -9,6 +9,8 @@
 | `check-docs.cmd` | Windows wrapper for `check-docs.ps1`; uses `pwsh` when available, otherwise `powershell` |
 | `test-wsl.ps1` | Configure, build and test the Linux build inside WSL using the `wsl-gcc-debug` preset |
 | `test-wsl.cmd` | Windows wrapper for `test-wsl.ps1` |
+| `bench-codec.ps1` | Configure, build and run the control-codec benchmark inside WSL |
+| `bench-codec.cmd` | Windows wrapper for `bench-codec.ps1` |
 
 ## Usage
 
@@ -23,6 +25,7 @@ Windows `cmd`:
 ```bat
 scripts\check-docs.cmd
 scripts\test-wsl.cmd
+scripts\bench-codec.cmd
 ```
 
 Both forms take no parameters. The scripts exit non-zero when a check or build fails.

@@ -53,6 +53,7 @@ last_reviewed: 2026-11-25
 - [Q-33](../decisions/fabric-services.md#q-33) — explicit READY before resolution; resolve supports waiting/timeout.
 - [Q-34](../decisions/fabric-services.md#q-34) — ordinary networking/hardware remain accessible; no general virtual network stack.
 - [Q-35](../decisions/fabric-services.md#q-35) — C++23 API plus a documented language-neutral protocol; no C++ layouts on the wire.
+- [Q-47](../decisions/fabric-services.md#q-47) — use Protocol Buffers for V1 control payloads after the codec benchmark.
 
 ## Store, packaging and artifacts
 

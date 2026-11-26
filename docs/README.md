@@ -39,8 +39,8 @@ unit-tested; ABI/runtime validation pending.**
 
 - **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing,
   blocking TCP transport, bootstrap handshake and session sequencing.
-- **Next:** payload codec decision, session replay/heartbeat, dependency enforcement, then a master
-  registry/queue and node agent for the first `plu run hello`.
+- **Next:** define versioned Protobuf control schemas, session replay/heartbeat, dependency
+  enforcement, then a master registry/queue and node agent for the first `plu run hello`.
 - **Not started:** master, node, runtime backends, store, client, CLI.
 - **Tests:** 57 unit tests across core, scheduler and fabric; see
   [Implementation map](maps/implementation.md).
@@ -98,7 +98,7 @@ Decision (Q-46): Develop these planned specifications in order, then implement t
 
 ## Decisions
 
-All 46 accepted project decisions are grouped into six themed files. The canonical, ordered index is
+All 47 accepted project decisions are grouped into six themed files. The canonical, ordered index is
 [Decision records](decisions/README.md); a thematic view is the [Decision map](maps/decisions.md).
 Each section keeps its stable `Q-N` ID and links to the architecture/specification document where the
 decision applies.

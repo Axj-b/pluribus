@@ -1,0 +1,30 @@
+include "common.fbs";
+
+namespace pluribus.bench.fb;
+
+table ArtifactInput {
+  artifact:string;
+  path:string;
+  access:Access;
+}
+
+table Submit {
+  request_id:string;
+  executable:string;
+  arguments:[string];
+  environment:[KeyValue];
+  labels:[KeyValue];
+  inputs:[ArtifactInput];
+  outputs:[string];
+  lifetime:Lifetime;
+  services:[string];
+  cpu_millicores:long;
+  memory_bytes:ulong;
+  architecture:string;
+  abi:string;
+  required_capabilities:[string];
+  required_devices:[string];
+  explicit_node:string;
+}
+
+root_type Submit;

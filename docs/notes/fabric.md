@@ -56,8 +56,9 @@ All integers are network byte order:
 `pluribusfabric` currently implements frame header encoding/decoding, bounded incremental decoding,
 error latching, a blocking `FrameStream` over a narrow `Stream` interface, in-memory loopback
 transport, blocking IPv4 TCP, a provisional bootstrap Hello/Welcome/Reject codec, and a `Session`
-that negotiates version/features/role/token and validates directional frame sequence. Session
-replay/resume, heartbeat, payload schemas and the async transport stack are next.
+that negotiates version/features/role/token and validates directional frame sequence. Protocol
+Buffers is selected for V1 control payloads (Q-47); the schemas and the provisional bootstrap codec
+still need to be replaced. Session replay/resume, heartbeat and the async transport stack are next.
 
 ## Related
 

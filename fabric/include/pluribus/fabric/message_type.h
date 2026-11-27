@@ -4,9 +4,11 @@
 
 namespace pluribus::fabric {
 
-// Provisional numeric assignments for the bootstrap handshake. The wire
-// specification explicitly leaves the complete type registry open; these
-// values are reserved for interoperability work and are not a frozen contract.
+// Provisional numeric assignments for the bootstrap handshake. The canonical
+// numeric registry lives in fabric/proto/control.proto (Q-48); the values here
+// must match MessageType::hello/welcome/reject and are enforced by
+// static_asserts in fabric/src/control_codec.cpp. They are not a frozen
+// contract.
 inline constexpr std::uint8_t kBootstrapHelloType = 1;
 inline constexpr std::uint8_t kBootstrapWelcomeType = 2;
 inline constexpr std::uint8_t kBootstrapRejectType = 3;

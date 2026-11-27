@@ -52,7 +52,7 @@ of scope.
   - ordered decode validation (bootstrap/invalid type, known, implemented, size cap, parse,
     payload-case match, `request_id` presence, field bounds);
   - encode validation mirrored before serialization; serialization failure maps to `internal`.
-- Added `tests/unit/fabric_control_tests.cpp` (13 tests) and wired it into `pluribus_fabric_tests`.
+- Added `tests/unit/fabric_control_tests.cpp` (17 tests) and wired it into `pluribus_fabric_tests`.
 - Added `control.pb.cc` / `control_codec.cpp` to `pluribusfabric`; generated and codec sources use
   the same warning suppressions as handshake (`-w` / `/W0`, plus `-Wno-shadow` for the codec).
 - Updated `fabric/proto/README.md`, the wire/node-master specs, OI-06, the fabric note,
@@ -67,8 +67,10 @@ of scope.
   brief listed "known type" first but also required bootstrap type 1 to return `invalid_argument`;
   these conflict, and this order satisfies the stated test outcomes. Unknown types such as 42 still
   return `unsupported_feature`.
-- `response_type` covers request → response/ack pairs only. Notifications (`Heartbeat`,
-  `WatchExecution`, `ServiceWatch`) return `nullopt`, as required by `response_type(18) == nullopt`.
+- `response_type` covers request → response/ack pairs that echo the same `request_id` only.
+  `Heartbeat` (18) is a notification whose ack (19) correlates by `heartbeat_seq`, not `request_id`,
+  so `response_type(18)` returns `nullopt`; `WatchExecution` and `ServiceWatch` are likewise
+  seq/event correlated and return `nullopt`.
 
 ## Verification
 
@@ -81,9 +83,13 @@ Environment: Windows MinGW GCC 13.2 (`windows-gcc-debug`, `windows-gcc-release`)
 | Windows debug tests | `ctest --preset windows-gcc-debug --output-on-failure` | 4/4 targets pass |
 | Windows release + Werror | `cmake --preset windows-gcc-release -DPLURIBUS_WARNINGS_AS_ERRORS=ON` + build | pass |
 | WSL debug build/tests | `cmd /c scripts\test-wsl.cmd` | 3/3 targets pass |
-| Unit counts | `pluribus_fabric_tests.exe` / core / scheduler | 33 / 22 / 16 passed, 0 failed |
-| Docs | `cmd /c scripts\check-docs.cmd` | 84 files, 1235 links, 393 anchors resolve |
-| Whitespace | `git diff --check` | no whitespace errors (one CRLF conversion warning only) |
+| Unit counts | `pluribus_fabric_tests.exe` / core / scheduler | 37 / 22 / 16 passed, 0 failed |
+| Docs | `cmd /c scripts\check-docs.cmd` | 84 files, 1236 links, 394 anchors resolve |
+| Whitespace (source) | `git diff --check -- . ':(exclude)**/*.pb.*'` | clean |
+
+`git diff --check` over the whole tree reports trailing whitespace inside the protoc-generated
+`control.pb.{h,cc}` (and the existing `handshake.pb.*`); that is protoc 3.21.12 output, not
+hand-written source, so the source-only check above is the passing gate.
 
 ## Measurements and benchmarks
 
@@ -102,6 +108,12 @@ the 16-byte `request_id` where present) is inherent to the chosen Q-47 Protobuf 
   re-encoding does not preserve them.
 - `request_id` correlation is enforced only for the implemented request/response pair (16/17);
   notifications (18) and acks (19) must omit it.
+- The catalog's deferred fields are not in this schema: `RegisterNode` active inventory summary,
+  `RegisterNodeAck` accepted configuration, `Heartbeat` optional resource snapshot, and `Error`
+  retry guidance.
+- `Error` on `HeartbeatAck` (19) carries no `heartbeat_seq`, so a heartbeat failure cannot be
+  correlated to a specific heartbeat. Acceptable only while such an error is treated as
+  connection-level/terminal; a correlated form is future work.
 - Generated code is committed; any schema edit requires regeneration with protoc `v3.21.12`.
 - The registry is assigned but the wire contract is still not frozen (see the wire spec).
 

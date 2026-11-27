@@ -1,12 +1,13 @@
 #include "test.h"
 
-#include <pluribus/core/version.h>
 #include <pluribus/fabric/control.h>
+#include <pluribus/fabric/frame.h>
 
 #include <cstddef>
 #include <cstdint>
 #include <initializer_list>
 #include <string>
+#include <string_view>
 #include <vector>
 
 namespace {
@@ -65,6 +66,93 @@ std::vector<std::byte> request_id_field(bool nil) {
         out.push_back(static_cast<std::byte>(nil ? 0 : index + 1));
     }
     return out;
+}
+
+// Minimal protobuf writer used to build deliberately out-of-bound payloads
+// without exposing the generated schema to the test.
+void append_varint(std::vector<std::byte>& out, std::uint64_t value) {
+    while (value >= 0x80) {
+        out.push_back(static_cast<std::byte>((value & 0x7F) | 0x80));
+        value >>= 7;
+    }
+    out.push_back(static_cast<std::byte>(value));
+}
+
+void append_tag(std::vector<std::byte>& out, unsigned int field, unsigned int wire_type) {
+    append_varint(out, (static_cast<std::uint64_t>(field) << 3) | wire_type);
+}
+
+void append_bytes(std::vector<std::byte>& out, unsigned int field, std::string_view value) {
+    append_tag(out, field, 2);
+    append_varint(out, value.size());
+    for (const char byte : value) {
+        out.push_back(static_cast<std::byte>(static_cast<unsigned char>(byte)));
+    }
+}
+
+void append_uint(std::vector<std::byte>& out, unsigned int field, std::uint64_t value) {
+    append_tag(out, field, 0);
+    append_varint(out, value);
+}
+
+std::string_view bytes_view(const std::vector<std::byte>& value) {
+    if (value.empty()) {
+        return {};
+    }
+    return {reinterpret_cast<const char*>(value.data()), value.size()};
+}
+
+std::vector<std::byte> make_wire_descriptor(
+    std::string_view name,
+    std::string_view abi,
+    const std::vector<std::string>& capabilities,
+    const std::vector<std::string>& devices) {
+    std::vector<std::byte> descriptor;
+    const std::string id(16, '\x11');
+    append_bytes(descriptor, 1, id);
+    append_bytes(descriptor, 2, name);
+    append_bytes(descriptor, 4, abi);
+    append_uint(descriptor, 5, 1); // CPU_ARCHITECTURE_X86_64
+    for (const auto& capability : capabilities) {
+        append_bytes(descriptor, 8, capability);
+    }
+    for (const auto& device : devices) {
+        append_bytes(descriptor, 9, device);
+    }
+    return descriptor;
+}
+
+std::vector<std::byte> make_register_node_envelope(
+    bool with_descriptor,
+    std::uint64_t incarnation,
+    std::string_view name = {},
+    std::string_view abi = {},
+    const std::vector<std::string>& capabilities = {},
+    const std::vector<std::string>& devices = {}) {
+    std::vector<std::byte> register_node;
+    if (with_descriptor) {
+        const auto descriptor = make_wire_descriptor(name, abi, capabilities, devices);
+        append_bytes(register_node, 1, bytes_view(descriptor));
+    }
+    append_uint(register_node, 2, incarnation);
+
+    auto envelope = request_id_field(false);
+    append_bytes(envelope, 3, bytes_view(register_node));
+    return envelope;
+}
+
+std::vector<std::byte> make_error_envelope(
+    std::uint64_t code,
+    std::string_view diagnostic,
+    std::string_view component) {
+    std::vector<std::byte> error;
+    append_uint(error, 1, code);
+    append_bytes(error, 2, diagnostic);
+    append_bytes(error, 3, component);
+
+    auto envelope = request_id_field(false);
+    append_bytes(envelope, 2, bytes_view(error));
+    return envelope;
 }
 
 } // namespace
@@ -288,6 +376,11 @@ PLURIBUS_TEST(fabric_control_request_id_rules) {
         encode_control(static_cast<std::uint8_t>(MessageType::register_node), encoded_message);
     CHECK(register_bytes.has_value());
 
+    // The request_id field must be the leading 0x0A 0x10 (tag, length) pair.
+    CHECK(register_bytes->size() > 18);
+    CHECK((*register_bytes)[0] == std::byte{0x0A});
+    CHECK((*register_bytes)[1] == std::byte{0x10});
+
     // A request with no request_id is invalid.
     std::vector<std::byte> missing_id(register_bytes->begin() + 18, register_bytes->end());
     const auto missing = decode_control(
@@ -401,8 +494,123 @@ PLURIBUS_TEST(fabric_control_field_bounds) {
     CHECK(encoded.error().code == ErrorCode::invalid_argument);
 }
 
+PLURIBUS_TEST(fabric_control_rejects_empty_capability_and_device) {
+    ControlMessage empty_capability;
+    empty_capability.request_id = make_request_id();
+    RegisterNode capability_node{make_descriptor(), 1};
+    capability_node.descriptor.capabilities.insert(CapabilityName{});
+    empty_capability.body = capability_node;
+    auto encoded =
+        encode_control(static_cast<std::uint8_t>(MessageType::register_node), empty_capability);
+    CHECK(!encoded.has_value());
+    CHECK(encoded.error().code == ErrorCode::invalid_argument);
+
+    ControlMessage empty_device;
+    empty_device.request_id = make_request_id();
+    RegisterNode device_node{make_descriptor(), 1};
+    device_node.descriptor.devices.insert(CapabilityName{});
+    empty_device.body = device_node;
+    encoded = encode_control(static_cast<std::uint8_t>(MessageType::register_node), empty_device);
+    CHECK(!encoded.has_value());
+    CHECK(encoded.error().code == ErrorCode::invalid_argument);
+}
+
+PLURIBUS_TEST(fabric_control_rejects_invalid_utf8_text) {
+    const std::string invalid(1, static_cast<char>(0xFF));
+
+    ControlMessage node;
+    node.request_id = make_request_id();
+    RegisterNode register_node{make_descriptor(), 1};
+    register_node.descriptor.name = invalid;
+    node.body = register_node;
+    auto encoded = encode_control(static_cast<std::uint8_t>(MessageType::register_node), node);
+    CHECK(!encoded.has_value());
+    CHECK(encoded.error().code == ErrorCode::invalid_argument);
+
+    Error error;
+    error.code = ErrorCode::internal;
+    error.diagnostic = invalid;
+    ControlMessage error_message;
+    error_message.request_id = make_request_id();
+    error_message.body = error;
+    encoded = encode_control(
+        static_cast<std::uint8_t>(MessageType::register_node_ack), error_message);
+    CHECK(!encoded.has_value());
+    CHECK(encoded.error().code == ErrorCode::invalid_argument);
+}
+
+PLURIBUS_TEST(fabric_control_decode_field_bounds) {
+    constexpr auto register_node = static_cast<std::uint8_t>(MessageType::register_node);
+    constexpr auto register_node_ack =
+        static_cast<std::uint8_t>(MessageType::register_node_ack);
+
+    const auto check_invalid = [](const std::vector<std::byte>& envelope, std::uint8_t type) {
+        const auto decoded = decode_control(envelope, type);
+        CHECK(!decoded.has_value());
+        CHECK(decoded.error().code == ErrorCode::invalid_argument);
+    };
+
+    check_invalid(make_register_node_envelope(true, 1, std::string(65, 'a')), register_node);
+    check_invalid(make_register_node_envelope(true, 1, {}, std::string(65, 'a')), register_node);
+
+    const std::vector<std::string> capabilities(65, "cap");
+    check_invalid(make_register_node_envelope(true, 1, {}, {}, capabilities), register_node);
+    const std::vector<std::string> devices(65, "dev");
+    check_invalid(make_register_node_envelope(true, 1, {}, {}, {}, devices), register_node);
+
+    check_invalid(make_error_envelope(18, std::string(1025, 'x'), {}), register_node_ack);
+    check_invalid(make_error_envelope(18, {}, std::string(65, 'c')), register_node_ack);
+
+    check_invalid(make_register_node_envelope(false, 1), register_node);
+    check_invalid(make_register_node_envelope(true, 0), register_node);
+}
+
+PLURIBUS_TEST(fabric_control_error_code_round_trip) {
+    const ErrorCode codes[] = {
+        ErrorCode::invalid_argument,
+        ErrorCode::message_too_large,
+        ErrorCode::unsupported_version,
+        ErrorCode::unsupported_feature,
+        ErrorCode::unauthorized,
+        ErrorCode::not_found,
+        ErrorCode::ambiguous,
+        ErrorCode::conflict,
+        ErrorCode::unavailable,
+        ErrorCode::timeout,
+        ErrorCode::resource_exhausted,
+        ErrorCode::unschedulable,
+        ErrorCode::sequence_gap,
+        ErrorCode::resync_required,
+        ErrorCode::artifact_missing,
+        ErrorCode::integrity_error,
+        ErrorCode::launch_failed,
+        ErrorCode::internal,
+    };
+
+    for (const auto code : codes) {
+        Error error;
+        error.code = code;
+        error.diagnostic = "diagnostic";
+        error.component = "component";
+
+        ControlMessage message;
+        message.request_id = make_request_id();
+        message.body = error;
+        const auto encoded = encode_control(
+            static_cast<std::uint8_t>(MessageType::register_node_ack), message);
+        CHECK(encoded.has_value());
+        const auto decoded = decode_control(
+            *encoded, static_cast<std::uint8_t>(MessageType::register_node_ack));
+        CHECK(decoded.has_value());
+        const auto* body = std::get_if<Error>(&decoded->body);
+        CHECK(body != nullptr);
+        CHECK(body->code == code);
+    }
+}
+
 PLURIBUS_TEST(fabric_control_rejects_oversized_payload) {
-    std::vector<std::byte> oversized(kMaxControlPayloadBytes + 1, std::byte{0});
+    std::vector<std::byte> oversized(
+        static_cast<std::size_t>(kMaxFrameLength - kHeaderBytes) + 1, std::byte{0});
     const auto decoded = decode_control(oversized, 18);
     CHECK(!decoded.has_value());
     CHECK(decoded.error().code == ErrorCode::message_too_large);

@@ -129,8 +129,8 @@ message NodeDescriptor {
   CpuArchitecture architecture = 5;
   uint32 logical_cpu_count = 6;
   uint64 total_memory_bytes = 7;
-  repeated string capabilities = 8; // each <= 64 bytes, at most 64 entries
-  repeated string devices = 9;      // each <= 64 bytes, at most 64 entries
+  repeated string capabilities = 8; // each non-empty and <= 64 bytes, at most 64 entries
+  repeated string devices = 9;      // each non-empty and <= 64 bytes, at most 64 entries
 }
 
 message RegisterNode {
@@ -166,7 +166,10 @@ message Error {
 }
 
 message Envelope {
-  bytes request_id = 1;            // empty for notification/ack; else 16-byte non-nil UUID
+  // 16-byte non-nil UUID for request/response pairs correlated by request_id
+  // (register_node, register_node_ack); empty when absent. heartbeat and
+  // heartbeat_ack correlate by heartbeat_seq, not request_id.
+  bytes request_id = 1;
   oneof payload {
     Error error = 2;               // only for response/ack types
     RegisterNode register_node = 3;

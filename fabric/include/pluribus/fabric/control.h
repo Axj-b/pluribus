@@ -108,8 +108,10 @@ Result<std::vector<std::byte>> encode_control(std::uint8_t type, const ControlMe
 
 Result<ControlMessage> decode_control(std::span<const std::byte> payload, std::uint8_t type);
 
-// The response/ack paired with a request type, when one exists. Notification
-// and already-response types return nullopt.
+// The response/ack that echoes the same request_id for a request type.
+// Notifications and already-response types return nullopt. In particular,
+// Heartbeat (18) is a notification whose ack (19) correlates by
+// heartbeat_seq, not request_id, so response_type(18) is nullopt.
 std::optional<std::uint8_t> response_type(std::uint8_t request_type) noexcept;
 
 // Assigned registry ID (16-37, 64-79). Bootstrap and reserved IDs are false.

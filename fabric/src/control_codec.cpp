@@ -13,6 +13,8 @@
 #include <vector>
 
 #include "pluribus/core/version.h"
+#include "pluribus/fabric/frame.h"
+#include "pluribus/fabric/message_type.h"
 
 namespace pluribus::fabric {
 namespace {
@@ -34,6 +36,9 @@ static_assert(static_cast<std::uint8_t>(MessageType::unspecified) ==
 static_assert(static_cast<std::uint8_t>(MessageType::hello) == wire::MESSAGE_TYPE_HELLO);
 static_assert(static_cast<std::uint8_t>(MessageType::welcome) == wire::MESSAGE_TYPE_WELCOME);
 static_assert(static_cast<std::uint8_t>(MessageType::reject) == wire::MESSAGE_TYPE_REJECT);
+static_assert(static_cast<std::uint8_t>(MessageType::hello) == kBootstrapHelloType);
+static_assert(static_cast<std::uint8_t>(MessageType::welcome) == kBootstrapWelcomeType);
+static_assert(static_cast<std::uint8_t>(MessageType::reject) == kBootstrapRejectType);
 static_assert(static_cast<std::uint8_t>(MessageType::register_node) ==
               wire::MESSAGE_TYPE_REGISTER_NODE);
 static_assert(static_cast<std::uint8_t>(MessageType::register_node_ack) ==
@@ -152,6 +157,56 @@ bool nil_bytes(std::string_view raw) noexcept {
         if (byte != '\0') {
             return false;
         }
+    }
+    return true;
+}
+
+// Strict UTF-8 validation over the raw byte sequence: rejects overlong forms,
+// surrogate code points and values above U+10FFFF. Protobuf `string` fields
+// must be valid UTF-8; serialization and parsing both depend on it.
+bool is_valid_utf8(std::string_view text) noexcept {
+    std::size_t index = 0;
+    while (index < text.size()) {
+        const auto lead = static_cast<unsigned char>(text[index]);
+        if (lead < 0x80) {
+            ++index;
+            continue;
+        }
+
+        std::size_t continuation = 0;
+        unsigned int codepoint = 0;
+        unsigned int minimum = 0;
+        if ((lead & 0xE0) == 0xC0) {
+            continuation = 1;
+            codepoint = lead & 0x1Fu;
+            minimum = 0x80;
+        } else if ((lead & 0xF0) == 0xE0) {
+            continuation = 2;
+            codepoint = lead & 0x0Fu;
+            minimum = 0x800;
+        } else if ((lead & 0xF8) == 0xF0) {
+            continuation = 3;
+            codepoint = lead & 0x07u;
+            minimum = 0x10000;
+        } else {
+            return false;
+        }
+
+        if (text.size() - index <= continuation) {
+            return false;
+        }
+        for (std::size_t offset = 1; offset <= continuation; ++offset) {
+            const auto next = static_cast<unsigned char>(text[index + offset]);
+            if ((next & 0xC0) != 0x80) {
+                return false;
+            }
+            codepoint = (codepoint << 6) | (next & 0x3Fu);
+        }
+        if (codepoint < minimum || codepoint > 0x10FFFF ||
+            (codepoint >= 0xD800 && codepoint <= 0xDFFF)) {
+            return false;
+        }
+        index += continuation + 1;
     }
     return true;
 }
@@ -326,6 +381,9 @@ std::optional<Error> validate_descriptor(const NodeDescriptor& descriptor) {
     if (descriptor.name.size() > kMaxNameBytes) {
         return invalid("node descriptor name is too long");
     }
+    if (!is_valid_utf8(descriptor.name)) {
+        return invalid("node descriptor name is not valid UTF-8");
+    }
     if (descriptor.abi_version.value().size() > kMaxAbiVersionBytes) {
         return invalid("node descriptor abi version is too long");
     }
@@ -336,17 +394,66 @@ std::optional<Error> validate_descriptor(const NodeDescriptor& descriptor) {
         return invalid("node descriptor has too many capabilities");
     }
     for (const auto& capability : descriptor.capabilities) {
-        if (capability.value().size() > kMaxCapabilityBytes) {
-            return invalid("node descriptor capability is too long");
+        if (capability.empty() || capability.value().size() > kMaxCapabilityBytes) {
+            return invalid("node descriptor capability is empty or too long");
         }
     }
     if (descriptor.devices.size() > kMaxDeviceEntries) {
         return invalid("node descriptor has too many devices");
     }
     for (const auto& device : descriptor.devices) {
-        if (device.value().size() > kMaxCapabilityBytes) {
-            return invalid("node descriptor device is too long");
+        if (device.empty() || device.value().size() > kMaxCapabilityBytes) {
+            return invalid("node descriptor device is empty or too long");
         }
+    }
+    return std::nullopt;
+}
+
+void write_error(const Error& error, wire::Error& out) {
+    out.set_code(to_wire_error_code(error.code));
+    out.set_diagnostic(error.diagnostic);
+    out.set_component(error.component);
+    if (error.node) {
+        out.set_node_id(to_wire_uuid(error.node->value()));
+    }
+    if (error.execution) {
+        out.set_execution_id(to_wire_uuid(error.execution->value()));
+    }
+}
+
+std::optional<Error> read_error(const wire::Error& in, Error& error) {
+    const auto code = from_wire_error_code(in.code());
+    if (!code) {
+        return invalid("error code is unspecified or unknown");
+    }
+    error.code = *code;
+    if (in.diagnostic().size() > kMaxDiagnosticBytes) {
+        return invalid("error diagnostic is too long");
+    }
+    if (!is_valid_utf8(in.diagnostic())) {
+        return invalid("error diagnostic is not valid UTF-8");
+    }
+    error.diagnostic = in.diagnostic();
+    if (in.component().size() > kMaxComponentBytes) {
+        return invalid("error component is too long");
+    }
+    if (!is_valid_utf8(in.component())) {
+        return invalid("error component is not valid UTF-8");
+    }
+    error.component = in.component();
+    if (!in.node_id().empty()) {
+        Uuid node;
+        if (!read_uuid(in.node_id(), node)) {
+            return invalid("error node id is not a 16-byte non-nil UUID");
+        }
+        error.node = NodeId(node);
+    }
+    if (!in.execution_id().empty()) {
+        Uuid execution;
+        if (!read_uuid(in.execution_id(), execution)) {
+            return invalid("error execution id is not a 16-byte non-nil UUID");
+        }
+        error.execution = ExecutionId(execution);
     }
     return std::nullopt;
 }
@@ -355,8 +462,14 @@ std::optional<Error> validate_error(const Error& error) {
     if (error.diagnostic.size() > kMaxDiagnosticBytes) {
         return invalid("error diagnostic is too long");
     }
+    if (!is_valid_utf8(error.diagnostic)) {
+        return invalid("error diagnostic is not valid UTF-8");
+    }
     if (error.component.size() > kMaxComponentBytes) {
         return invalid("error component is too long");
+    }
+    if (!is_valid_utf8(error.component)) {
+        return invalid("error component is not valid UTF-8");
     }
     if (error.node && error.node->is_nil()) {
         return invalid("error node id is nil");
@@ -501,7 +614,7 @@ std::optional<std::uint8_t> response_type(std::uint8_t request_type) noexcept {
 }
 
 bool is_known_message_type(std::uint8_t type) noexcept {
-    return (type >= 16 && type <= 37) || (type >= 64 && type <= 79);
+    return type >= 16 && wire::MessageType_IsValid(static_cast<int>(type));
 }
 
 bool is_implemented_message_type(std::uint8_t type) noexcept {
@@ -568,16 +681,7 @@ Result<std::vector<std::byte>> encode_control(
             if (const auto validated = validate_error(*error)) {
                 return std::unexpected(*validated);
             }
-            auto* out = envelope.mutable_error();
-            out->set_code(to_wire_error_code(error->code));
-            out->set_diagnostic(error->diagnostic);
-            out->set_component(error->component);
-            if (error->node) {
-                out->set_node_id(to_wire_uuid(error->node->value()));
-            }
-            if (error->execution) {
-                out->set_execution_id(to_wire_uuid(error->execution->value()));
-            }
+            write_error(*error, *envelope.mutable_error());
         } else {
             return std::unexpected(invalid("control body does not match message type"));
         }
@@ -613,16 +717,7 @@ Result<std::vector<std::byte>> encode_control(
             if (const auto validated = validate_error(*error)) {
                 return std::unexpected(*validated);
             }
-            auto* out = envelope.mutable_error();
-            out->set_code(to_wire_error_code(error->code));
-            out->set_diagnostic(error->diagnostic);
-            out->set_component(error->component);
-            if (error->node) {
-                out->set_node_id(to_wire_uuid(error->node->value()));
-            }
-            if (error->execution) {
-                out->set_execution_id(to_wire_uuid(error->execution->value()));
-            }
+            write_error(*error, *envelope.mutable_error());
         } else {
             return std::unexpected(invalid("control body does not match message type"));
         }
@@ -650,7 +745,7 @@ Result<ControlMessage> decode_control(std::span<const std::byte> payload, std::u
         return std::unexpected(
             unsupported_feature("message type is assigned but not yet implemented"));
     }
-    if (payload.size() > kMaxControlPayloadBytes) {
+    if (payload.size() > static_cast<std::size_t>(kMaxFrameLength - kHeaderBytes)) {
         return std::unexpected(message_too_large("control payload exceeds the frame limit"));
     }
 
@@ -695,35 +790,9 @@ Result<ControlMessage> decode_control(std::span<const std::byte> payload, std::u
     }
     case static_cast<std::uint8_t>(MessageType::register_node_ack): {
         if (envelope.payload_case() == wire::Envelope::kError) {
-            const auto& in = envelope.error();
-            const auto code = from_wire_error_code(in.code());
-            if (!code) {
-                return std::unexpected(invalid("error code is unspecified or unknown"));
-            }
             Error error;
-            error.code = *code;
-            if (in.diagnostic().size() > kMaxDiagnosticBytes) {
-                return std::unexpected(invalid("error diagnostic is too long"));
-            }
-            error.diagnostic = in.diagnostic();
-            if (in.component().size() > kMaxComponentBytes) {
-                return std::unexpected(invalid("error component is too long"));
-            }
-            error.component = in.component();
-            if (!in.node_id().empty()) {
-                Uuid node;
-                if (!read_uuid(in.node_id(), node)) {
-                    return std::unexpected(invalid("error node id is not a 16-byte non-nil UUID"));
-                }
-                error.node = NodeId(node);
-            }
-            if (!in.execution_id().empty()) {
-                Uuid execution;
-                if (!read_uuid(in.execution_id(), execution)) {
-                    return std::unexpected(
-                        invalid("error execution id is not a 16-byte non-nil UUID"));
-                }
-                error.execution = ExecutionId(execution);
+            if (const auto validated = read_error(envelope.error(), error)) {
+                return std::unexpected(*validated);
             }
             message.body = std::move(error);
         } else {
@@ -763,35 +832,9 @@ Result<ControlMessage> decode_control(std::span<const std::byte> payload, std::u
     }
     case static_cast<std::uint8_t>(MessageType::heartbeat_ack): {
         if (envelope.payload_case() == wire::Envelope::kError) {
-            const auto& in = envelope.error();
-            const auto code = from_wire_error_code(in.code());
-            if (!code) {
-                return std::unexpected(invalid("error code is unspecified or unknown"));
-            }
             Error error;
-            error.code = *code;
-            if (in.diagnostic().size() > kMaxDiagnosticBytes) {
-                return std::unexpected(invalid("error diagnostic is too long"));
-            }
-            error.diagnostic = in.diagnostic();
-            if (in.component().size() > kMaxComponentBytes) {
-                return std::unexpected(invalid("error component is too long"));
-            }
-            error.component = in.component();
-            if (!in.node_id().empty()) {
-                Uuid node;
-                if (!read_uuid(in.node_id(), node)) {
-                    return std::unexpected(invalid("error node id is not a 16-byte non-nil UUID"));
-                }
-                error.node = NodeId(node);
-            }
-            if (!in.execution_id().empty()) {
-                Uuid execution;
-                if (!read_uuid(in.execution_id(), execution)) {
-                    return std::unexpected(
-                        invalid("error execution id is not a 16-byte non-nil UUID"));
-                }
-                error.execution = ExecutionId(execution);
+            if (const auto validated = read_error(envelope.error(), error)) {
+                return std::unexpected(*validated);
             }
             message.body = std::move(error);
         } else {

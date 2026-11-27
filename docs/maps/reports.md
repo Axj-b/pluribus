@@ -14,7 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- None.
+- [Control envelope and type registry](../reports/009-control-envelope.md) — `task/control-envelope` — numeric `MessageType` registry, `Envelope`/`Error` schema and four initial bodies.
 
 ## Approved
 

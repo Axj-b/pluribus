@@ -24,6 +24,7 @@ add_executable(pluribus_fabric_tests
     unit/fabric_tests.cpp
     unit/fabric_transport_tests.cpp
     unit/fabric_session_tests.cpp
+    unit/fabric_control_tests.cpp
 )
 target_link_libraries(pluribus_fabric_tests PRIVATE
     pluribusfabric

@@ -17,7 +17,7 @@ last_reviewed: 2026-11-25
 | Target | Location | Status | Tests |
 |---|---|---|---|
 | `pluribuscore` | [`core/`](../../core) | Model, IDs, errors, paths, state machine | 22 unit tests |
-| `pluribusfabric` | [`fabric/`](../../fabric) | Framing, frame stream, loopback, blocking TCP, bootstrap handshake and session sequencing | 19 unit tests |
+| `pluribusfabric` | [`fabric/`](../../fabric) | Framing, frame stream, loopback, blocking TCP, bootstrap handshake, session sequencing and the control envelope/registry with four initial bodies | 33 unit tests |
 | `pluribusscheduler` | [`master/scheduler/`](../../master/scheduler) | Pure V1 scheduler | 16 unit tests |
 | `pluribusmaster` | — | Not started | — |
 | `pluribusnode` | — | Not started | — |
@@ -30,7 +30,7 @@ last_reviewed: 2026-11-25
 | Milestone | Scope | Status |
 |---|---|---|
 | A | Core model: IDs, spec, handle/state, node/resources, service, protocol contracts | Core model done; wire schema still open |
-| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing, transport, bootstrap handshake and session sequencing done; payload codec, replay/resume, heartbeat and async stack pending |
+| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing, transport, bootstrap handshake, session sequencing and the control envelope/registry done; remaining bodies, replay/resume, heartbeat integration and async stack pending |
 | C | Node registry: registration, CPU/RAM reporting, health, `plu nodes` | Not started |
 | D | Remote execution: queue, trivial scheduler, assignment, launch, logs, exit, `plu run` | Scheduler done; master/node/runtime/CLI pending |
 | E | Lifecycle: `plu ps`, `plu stop`, persistent executions, node loss | Not started |
@@ -41,7 +41,8 @@ last_reviewed: 2026-11-25
 
 ### Now
 
-1. **Define the control envelope and remaining message schemas** (the bootstrap handshake already uses Protobuf).
+1. **Define the remaining control message bodies**: the envelope, numeric registry and four node
+   bodies exist; types 20–79 are schema-pending.
 2. **Session replay/resume and heartbeat**: acks, replay buffers, gap recovery, heartbeat cadence.
 3. **Dependency enforcement**: the configure-time graph check and include scan are done; add
    negative fixtures and pin the toolchain/dependency baseline.
@@ -106,6 +107,7 @@ See the [open-question map](open-questions.md), especially:
 - [Fabric session report](../reports/004-fabric-session.md) - bootstrap handshake and sequenced sessions.
 - [Codec benchmark report](../reports/005-codec-benchmark.md) - Protocol Buffers selected for V1 control.
 - [Protobuf handshake report](../reports/008-protobuf-schemas.md) - versioned Protobuf Hello/Welcome/Reject codec.
+- [Control envelope report](../reports/009-control-envelope.md) - numeric type registry, envelope/error schema and four initial bodies.
 - [Async transport benchmark report](../reports/006-async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
 - [Dependency enforcement report](../reports/007-dependency-enforcement.md) - CMake graph check and platform-include scan.
 - [Task workflow report](../reports/001-task-workflow.md) — branch/report process and review workflow.

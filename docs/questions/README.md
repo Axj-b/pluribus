@@ -92,8 +92,8 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Define one versioned envelope with `request_id`, optional portable `Error`, and a `oneof` payload. Reserve numeric ranges: `0` invalid, `1–3` bootstrap, `16–63` control-plane, `64–127` services/artifacts, `128–255` extensions; publish the registry in one source of truth. Keep flags `0` in V1, with a documented future bit range. Unknown optional fields are preserved; unknown required flags/versions fail negotiation. Choose the codec via [OI-14](#oi-14-serializer-selection) before freezing payloads.
 - **Trade-offs:** Reserving ranges is cheap and prevents later collisions; a premature concrete schema could lock in mistakes. Keep bootstrap messages tiny and separately versioned from application messages.
 - **Confidence:** medium
-- **Progress (2026-11-27):** the bootstrap handshake now uses a versioned Protobuf schema; the control-message envelope and remaining message types are still open.
-- **Next action:** Define the versioned control envelope, message catalog and numeric type registry; generate code and replace the remaining provisional payloads.
+- **Progress (2026-11-27):** the bootstrap handshake uses a versioned Protobuf schema. The numeric `MessageType` registry, `Envelope` (with `request_id`, portable `Error` and body `oneof`) and `RegisterNode`/`RegisterNodeAck`/`Heartbeat`/`HeartbeatAck` bodies are defined in `control.proto` and implemented by a bounded codec. The frame `type` byte is the sole dispatch key; bootstrap messages are not wrapped.
+- **Next action:** define the remaining bodies (types 20–79) and their OI dependencies, then add role/direction enforcement and session dispatch; freeze only after conformance fixtures.
 - **Related:** [Fabric](../notes/fabric.md), [Wire protocol](../spec/05-wire-protocol.md)
 
 ## OI-07 Endpoint tickets and route authorization

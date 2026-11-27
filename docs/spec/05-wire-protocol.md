@@ -9,7 +9,7 @@ last_reviewed: 2026-11-25
 
 # 05. Wire protocol, retry and compatibility
 
-Status: proposed framing and semantics for interoperable V1 implementations; V1 control payloads use Protocol Buffers (Q-47), while the complete schema and numeric type registry are not yet frozen. The [message catalog](02-node-master-protocol.md) specifies logical fields; [execution](01-execution-model.md), [C++ API](03-cpp-public-api.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [store](08-artifact-store-protocol.md) and [security](10-security-model.md) specify their domains. The wire is language-neutral, never a dump of C++ layouts. ABI compatibility for executables is Pluribus ABI plus CPU architecture, distinct from protocol version and not host-OS scheduling.
+Status: proposed framing and semantics for interoperable V1 implementations; V1 control payloads use Protocol Buffers (Q-47), with numeric message types assigned in [`control.proto`](../../fabric/proto/control.proto) (Q-48), while the contract is not yet frozen. The [message catalog](02-node-master-protocol.md) specifies logical fields; [execution](01-execution-model.md), [C++ API](03-cpp-public-api.md), [services](04-service-model.md), [runtime boundary](06-node-runtime-boundary.md), [store](08-artifact-store-protocol.md) and [security](10-security-model.md) specify their domains. The wire is language-neutral, never a dump of C++ layouts. ABI compatibility for executables is Pluribus ABI plus CPU architecture, distinct from protocol version and not host-OS scheduling.
 
 ## Connections and framing
 
@@ -21,12 +21,12 @@ Proposed fixed framing, all integers unsigned in network byte order:
 |---|---:|---|
 | `length` | 4 | Number of bytes following this field: fixed 12-byte header plus payload. |
 | `version` | 1 | Wire major version; zero reserved for bootstrap Hello/Welcome/Reject. |
-| `type` | 1 | Message type within the negotiated major version; bootstrap types reserved. |
+| `type` | 1 | Numeric `MessageType` within the negotiated major version; the sole dispatch key. Bootstrap types reserved; bootstrap messages are not wrapped in an `Envelope`. |
 | `flags` | 2 | Defined per version; unknown mandatory flags cause rejection. |
 | `sequence` | 8 | Directional session frame sequence, zero for bootstrap before a session exists. |
 | `payload` | `length - 12` | Encoded message, including request correlation where applicable. |
 
-The 1 MiB control-message limit applies to the **entire frame**, including the four-byte length prefix. Reject `length` below 12 or above 1,048,572 **before allocation or decoding**, with a bounded error if safe, otherwise close. A logical control message fits in one frame; no control fragmentation. Large data must use the data plane. Data connections have separately negotiated bounded chunks and purpose-specific limits; they must never bypass control limits by disguising control messages as data. Validate type, flags, role, version and payload sizes before dispatch. The numeric type registry, bootstrap encoding, data framing and flag assignments are not yet frozen.
+The 1 MiB control-message limit applies to the **entire frame**, including the four-byte length prefix. Reject `length` below 12 or above 1,048,572 **before allocation or decoding**, with a bounded error if safe, otherwise close. A logical control message fits in one frame; no control fragmentation. Large data must use the data plane. Data connections have separately negotiated bounded chunks and purpose-specific limits; they must never bypass control limits by disguising control messages as data. Validate type, flags, role, version and payload sizes before dispatch. Numeric message types are assigned in [`control.proto`](../../fabric/proto/control.proto): one value per concrete message, requests and responses/acks separate, bootstrap `1–3`, control `16–37`, services/artifacts `64–79`, with reserved gaps. The frame `type` byte is the sole dispatch key; the Protobuf `Envelope` has no `type` field, and `request_id` is a 16-byte non-nil UUID. Bootstrap encoding, data framing and flag assignments are not yet frozen.
 
 ## Handshake and version negotiation
 
@@ -64,7 +64,7 @@ Bound queues, replay buffers and history. Apply flow control per data connection
 **V1 decision (2026-11-26):** Protocol Buffers is selected for V1 control payloads in
 [Q-47](../decisions/fabric-services.md#q-47), based on the [codec benchmark
 report](../reports/005-codec-benchmark.md). Cap'n Proto and FlatBuffers remain candidates for a future
-major change, not V1. The Protobuf schemas, numeric type registry and flags are still provisional and
+major change, not V1. The Protobuf schemas and assigned numeric types are still provisional and
 must not be treated as a frozen wire contract.
 
 Benchmark **FlatBuffers, Cap'n Proto and Protocol Buffers** using equivalent, versioned schema definitions and realistic payload distributions. No candidate wins merely due to popularity. Fix representative small and larger cases: Hello/register and NodeDescriptor with capabilities/resources; heartbeat; submit with args/environment, labels, constraints and artifacts; assignment and state event; service readiness/resolve/watch; error; artifact location query/response. Include typical and high-percentile counts and strings, as well as schema evolution/unknown-field cases. Data-plane bulk throughput is measured separately and must not dominate the control-format decision.
@@ -81,7 +81,7 @@ The documented language-neutral protocol is intended to become a stable contract
 
 ## Open issues
 
-- Serializer selection and benchmark results, bootstrap encoding, type/flag registry, data-plane frame formats and limits remain undecided.
+- Type IDs are assigned in [`control.proto`](../../fabric/proto/control.proto), but bodies for 20–79 are schema-pending; bootstrap encoding, flag assignments, data-plane frame formats and limits remain undecided.
 - Session/deduplication retention, canonical request fingerprint, client identity, durable master storage, authentication and ticket design require implementation decisions.
 - Exact compatible-version release policy and required conformance suite need to be established before the contract is declared stable.
 

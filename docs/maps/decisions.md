@@ -54,6 +54,7 @@ last_reviewed: 2026-11-25
 - [Q-34](../decisions/fabric-services.md#q-34) — ordinary networking/hardware remain accessible; no general virtual network stack.
 - [Q-35](../decisions/fabric-services.md#q-35) — C++23 API plus a documented language-neutral protocol; no C++ layouts on the wire.
 - [Q-47](../decisions/fabric-services.md#q-47) — use Protocol Buffers for V1 control payloads after the codec benchmark.
+- [Q-48](../decisions/fabric-services.md#q-48) — frame `type` is the sole dispatch key; one numeric ID per concrete message; 16-byte UUID `request_id`.
 
 ## Store, packaging and artifacts
 

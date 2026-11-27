@@ -38,11 +38,13 @@ unit-tested; ABI/runtime validation pending.**
 ## Current state
 
 - **Implemented:** `pluribuscore` model, `pluribusscheduler` V1, `pluribusfabric` control framing,
-  blocking TCP transport, bootstrap handshake and session sequencing.
-- **Next:** define the control envelope and remaining message schemas, session replay/heartbeat,
-  dependency baseline, then a master registry/queue and node agent for the first `plu run hello`.
+  blocking TCP transport, bootstrap handshake, session sequencing, and the control envelope with a
+  numeric type registry and four initial node bodies.
+- **Next:** define the remaining control bodies, add role/direction enforcement and session
+  dispatch, then session replay/heartbeat and the dependency baseline before a master registry and
+  node agent for the first `plu run hello`.
 - **Not started:** master, node, runtime backends, store, client, CLI.
-- **Tests:** 58 unit tests across core, scheduler and fabric; see
+- **Tests:** 71 unit tests across core, scheduler and fabric; see
   [Implementation map](maps/implementation.md).
 
 ## How this knowledge base works

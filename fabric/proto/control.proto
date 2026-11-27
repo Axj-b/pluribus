@@ -1,0 +1,177 @@
+syntax = "proto3";
+
+package pluribus.wire;
+
+// Version-1 control payload schema.
+//
+// The frame header `type` byte (fabric/include/pluribus/fabric/frame.h) is the
+// sole dispatch key. The Envelope deliberately has no `type` field, and it has
+// no `version` field either: the frame header version (1) is the version.
+//
+// Every concrete message has its own numeric MessageType value. Requests and
+// responses/acks are separate IDs. Bootstrap Hello/Welcome/Reject stay at
+// version 0 and are NOT wrapped in an Envelope.
+//
+// Numeric ranges:
+//   0        invalid
+//   1-3      bootstrap (version 0; not valid in a control envelope)
+//   4-15     reserved
+//   16-37    control plane (node registration, heartbeat, execution, reconcile)
+//   38-63    reserved
+//   64-79    services and artifact locations
+//   80-127   reserved
+//   128-255  reserved for extensions
+//
+// Envelope body field numbers are intentionally low and independent of the
+// MessageType values; do not couple them.
+//
+// Schema status: the MessageType registry is assigned for all catalog messages,
+// but only RegisterNode, RegisterNodeAck, Heartbeat and HeartbeatAck have bodies
+// in this revision. The bodies for 20-79 (DescriptorUpdate, Submit, Assign,
+// StateEvent, reconcile, log, service and artifact messages) are
+// schema-pending and are not part of the oneof yet.
+//
+// Unknown fields are tolerated on decode (proto3 default), but re-encoding a
+// decoded message does not preserve them.
+
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  MESSAGE_TYPE_HELLO = 1;    // version 0 bootstrap, not in Envelope
+  MESSAGE_TYPE_WELCOME = 2;
+  MESSAGE_TYPE_REJECT = 3;
+  // 4-15 reserved
+  MESSAGE_TYPE_REGISTER_NODE = 16;
+  MESSAGE_TYPE_REGISTER_NODE_ACK = 17;
+  MESSAGE_TYPE_HEARTBEAT = 18;
+  MESSAGE_TYPE_HEARTBEAT_ACK = 19;
+  MESSAGE_TYPE_DESCRIPTOR_UPDATE = 20;
+  MESSAGE_TYPE_DESCRIPTOR_UPDATE_ACK = 21;
+  MESSAGE_TYPE_SUBMIT = 22;
+  MESSAGE_TYPE_SUBMIT_ACK = 23;
+  MESSAGE_TYPE_GET_EXECUTION = 24;
+  MESSAGE_TYPE_EXECUTION_SNAPSHOT = 25;
+  MESSAGE_TYPE_ASSIGN = 26;
+  MESSAGE_TYPE_ASSIGNMENT_ACK = 27;
+  MESSAGE_TYPE_STATE_EVENT = 28;
+  MESSAGE_TYPE_STATE_EVENT_ACK = 29;
+  MESSAGE_TYPE_WATCH_EXECUTION = 30;
+  MESSAGE_TYPE_EXECUTION_EVENT = 31;
+  MESSAGE_TYPE_TERMINATE = 32;
+  MESSAGE_TYPE_TERMINATE_ACK = 33;
+  MESSAGE_TYPE_RECONCILE_REQUEST = 34;
+  MESSAGE_TYPE_RECONCILE_REPORT = 35;
+  MESSAGE_TYPE_RECONCILE_DECISION = 36;
+  MESSAGE_TYPE_RECONCILE_DECISION_ACK = 37;
+  // 38-63 reserved
+  MESSAGE_TYPE_LOG_SUBSCRIBE = 64;
+  MESSAGE_TYPE_LOG_SUBSCRIBE_ACK = 65;
+  MESSAGE_TYPE_SERVICE_REGISTER = 66;
+  MESSAGE_TYPE_SERVICE_REGISTER_ACK = 67;
+  MESSAGE_TYPE_SERVICE_READY = 68;
+  MESSAGE_TYPE_SERVICE_READY_ACK = 69;
+  MESSAGE_TYPE_SERVICE_UNREGISTER = 70;
+  MESSAGE_TYPE_SERVICE_UNREGISTER_ACK = 71;
+  MESSAGE_TYPE_SERVICE_RESOLVE = 72;
+  MESSAGE_TYPE_SERVICE_RESOLVE_ACK = 73;
+  MESSAGE_TYPE_SERVICE_WATCH = 74;
+  MESSAGE_TYPE_SERVICE_EVENT = 75;
+  MESSAGE_TYPE_ARTIFACT_LOCATION_QUERY = 76;
+  MESSAGE_TYPE_ARTIFACT_LOCATION_ACK = 77;
+  MESSAGE_TYPE_ARTIFACT_LOCATION_UPDATE = 78;
+  MESSAGE_TYPE_ARTIFACT_LOCATION_UPDATE_ACK = 79;
+  // 80-127 reserved; 128-255 extensions reserved
+  reserved 4 to 15, 38 to 63, 80 to 255;
+}
+
+// Portable error categories. Values are stable and deliberately do NOT mirror
+// the positional layout of the C++ core ErrorCode; the codec maps them with an
+// explicit switch in both directions.
+enum ErrorCode {
+  ERROR_CODE_UNSPECIFIED = 0;
+  ERROR_CODE_INVALID_ARGUMENT = 1;
+  ERROR_CODE_MESSAGE_TOO_LARGE = 2;
+  ERROR_CODE_UNSUPPORTED_VERSION = 3;
+  ERROR_CODE_UNSUPPORTED_FEATURE = 4;
+  ERROR_CODE_UNAUTHORIZED = 5;
+  ERROR_CODE_NOT_FOUND = 6;
+  ERROR_CODE_AMBIGUOUS = 7;
+  ERROR_CODE_CONFLICT = 8;
+  ERROR_CODE_UNAVAILABLE = 9;
+  ERROR_CODE_TIMEOUT = 10;
+  ERROR_CODE_RESOURCE_EXHAUSTED = 11;
+  ERROR_CODE_UNSCHEDULABLE = 12;
+  ERROR_CODE_SEQUENCE_GAP = 13;
+  ERROR_CODE_RESYNC_REQUIRED = 14;
+  ERROR_CODE_ARTIFACT_MISSING = 15;
+  ERROR_CODE_INTEGRITY_ERROR = 16;
+  ERROR_CODE_LAUNCH_FAILED = 17;
+  ERROR_CODE_INTERNAL = 18;
+}
+
+enum CpuArchitecture {
+  CPU_ARCHITECTURE_UNSPECIFIED = 0;
+  CPU_ARCHITECTURE_X86_64 = 1;
+  CPU_ARCHITECTURE_ARM64 = 2;
+}
+
+enum NodeHealth {
+  NODE_HEALTH_UNSPECIFIED = 0;
+  NODE_HEALTH_HEALTHY = 1;
+  NODE_HEALTH_DEGRADED = 2;
+  NODE_HEALTH_UNHEALTHY = 3;
+}
+
+message NodeDescriptor {
+  bytes id = 1;                    // 16-byte non-nil UUID
+  string name = 2;                 // <= 64 bytes
+  uint32 protocol_major = 3;
+  string abi_version = 4;          // <= 64 bytes, e.g. "pluribus-v1"
+  CpuArchitecture architecture = 5;
+  uint32 logical_cpu_count = 6;
+  uint64 total_memory_bytes = 7;
+  repeated string capabilities = 8; // each <= 64 bytes, at most 64 entries
+  repeated string devices = 9;      // each <= 64 bytes, at most 64 entries
+}
+
+message RegisterNode {
+  // Named node_descriptor, not descriptor: a field called `descriptor` would
+  // collide with the static descriptor() accessor that protoc generates.
+  NodeDescriptor node_descriptor = 1;
+  uint64 incarnation = 2;          // >= 1; 0 invalid
+}
+
+message RegisterNodeAck {
+  uint32 heartbeat_interval_ms = 1; // >= 1
+  bool reconciliation_required = 2;
+}
+
+message Heartbeat {
+  bytes node_id = 1;               // 16-byte non-nil UUID
+  uint64 incarnation = 2;          // >= 1
+  uint64 heartbeat_seq = 3;
+  uint64 descriptor_revision = 4;
+  NodeHealth health = 5;
+}
+
+message HeartbeatAck {
+  uint64 heartbeat_seq = 1;
+}
+
+message Error {
+  ErrorCode code = 1;              // must not be UNSPECIFIED when sent
+  string diagnostic = 2;           // <= 1024 bytes
+  string component = 3;            // <= 64 bytes
+  bytes node_id = 4;               // empty or 16-byte non-nil UUID
+  bytes execution_id = 5;          // empty or 16-byte non-nil UUID
+}
+
+message Envelope {
+  bytes request_id = 1;            // empty for notification/ack; else 16-byte non-nil UUID
+  oneof payload {
+    Error error = 2;               // only for response/ack types
+    RegisterNode register_node = 3;
+    RegisterNodeAck register_node_ack = 4;
+    Heartbeat heartbeat = 5;
+    HeartbeatAck heartbeat_ack = 6;
+  }
+}

@@ -15,9 +15,11 @@ FetchContent_MakeAvailable(protobuf)
 add_library(pluribusfabric STATIC
     src/frame.cpp
     src/frame_stream.cpp
+    src/control_codec.cpp
     src/handshake_codec.cpp
     src/loopback.cpp
     src/session.cpp
+    proto/control.pb.cc
     proto/handshake.pb.cc
 )
 add_library(pluribus::fabric ALIAS pluribusfabric)
@@ -47,8 +49,8 @@ target_link_libraries(pluribusfabric
 )
 
 if(MSVC)
-    set_source_files_properties(proto/handshake.pb.cc PROPERTIES COMPILE_OPTIONS "/W0")
+    set_source_files_properties(proto/handshake.pb.cc proto/control.pb.cc PROPERTIES COMPILE_OPTIONS "/W0")
 else()
-    set_source_files_properties(proto/handshake.pb.cc PROPERTIES COMPILE_OPTIONS "-w")
-    set_source_files_properties(src/handshake_codec.cpp PROPERTIES COMPILE_OPTIONS "-Wno-shadow")
+    set_source_files_properties(proto/handshake.pb.cc proto/control.pb.cc PROPERTIES COMPILE_OPTIONS "-w")
+    set_source_files_properties(src/handshake_codec.cpp src/control_codec.cpp PROPERTIES COMPILE_OPTIONS "-Wno-shadow")
 endif()

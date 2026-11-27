@@ -83,6 +83,14 @@ source of context and consequences; expand an entry when the decision is revisit
 
 **Applies to.** [Wire protocol](../spec/05-wire-protocol.md#serialization-benchmark-and-selection)
 
+---
+
+## Q-48
+
+**Decision.** The frame header `type` byte is the sole dispatch key. Every concrete control message has one numeric `MessageType` value (requests and responses/acks separately) assigned in `control.proto`; the Protobuf `Envelope` carries no type field. `request_id` is a 16-byte non-nil UUID, empty when absent.
+
+**Applies to.** [Wire protocol](../spec/05-wire-protocol.md#connections-and-framing), [Node/master protocol](../spec/02-node-master-protocol.md#common-envelope-and-conventions)
+
 ## Navigation
 
 - [Decision records index](README.md)

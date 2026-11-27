@@ -13,7 +13,7 @@ This catalog defines logical messages, not a binary schema or C++ layout. The [w
 
 ## Common envelope and conventions
 
-Each request has a request ID for response correlation; mutating request IDs also provide deduplication within the stated scope and retention. Responses echo the ID and carry either result or a portable error. Messages use the negotiated version, role, session and directional frame sequence; payload fields below omit that envelope. `?` means optional, `[]` repeated. `ExecutionId`, `NodeId` UUID, assignment ID, service provider ID and artifact digest are distinct typed logical values. Names are display or logical names, not node identity. Per-execution `event_seq` is separate from frame sequence and master `revision`.
+Each request has a request ID for response correlation; mutating request IDs also provide deduplication within the stated scope and retention. Responses echo the ID and carry either result or a portable error. Messages use the negotiated version, role, session and directional frame sequence; payload fields below omit that envelope. `?` means optional, `[]` repeated. `ExecutionId`, `NodeId` UUID, assignment ID, service provider ID and artifact digest are distinct typed logical values. Names are display or logical names, not node identity. Per-execution `event_seq` is separate from frame sequence and master `revision`. Numeric message-type IDs for these catalog messages are now assigned in [`control.proto`](../../fabric/proto/control.proto); the envelope dispatch key is the frame `type` byte.
 
 ## Session, node and execution messages
 
@@ -105,7 +105,7 @@ Responses include code, human-readable diagnostic and optional retry guidance an
 
 ## Open issues
 
-- Final message schema, numeric type assignments, endpoint-ticket format, authentication details and exact pagination limits depend on wire/serialization and security work.
+- Numeric type assignments are in `control.proto`, but most message bodies (types 20–79) are still schema-pending; endpoint-ticket format, authentication details and exact pagination limits depend on wire/serialization and security work.
 - Exact client identity, request deduplication retention and master-restart durability remain to be decided.
 
 ## Knowledge base links

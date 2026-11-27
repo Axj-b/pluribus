@@ -57,10 +57,13 @@ All integers are network byte order:
 error latching, a blocking `FrameStream` over a narrow `Stream` interface, in-memory loopback
 transport, blocking IPv4 TCP, a versioned Protobuf Hello/Welcome/Reject handshake codec, and a
 `Session` that negotiates version/features/role/token and validates directional frame sequence.
-Protocol Buffers is selected for V1 control payloads (Q-47); the control-message envelope schema is
-still pending. A single-connection Asio benchmark was slower than the blocking reference, so blocking
-remains the V1 reference until concurrency testing. Session replay/resume, heartbeat and the final
-async stack are next.
+Protocol Buffers is selected for V1 control payloads (Q-47). The numeric `MessageType` registry and
+the control `Envelope` (request ID, portable `Error`, body `oneof`) are defined in
+[`control.proto`](../../fabric/proto/control.proto), with `RegisterNode`, `RegisterNodeAck`,
+`Heartbeat` and `HeartbeatAck` implemented; the frame `type` byte is the sole dispatch key and
+bootstrap messages are not wrapped. A single-connection Asio benchmark was slower than the blocking
+reference, so blocking remains the V1 reference until concurrency testing. Remaining bodies,
+session replay/resume, heartbeat integration and the final async stack are next.
 
 ## Related
 

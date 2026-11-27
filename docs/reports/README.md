@@ -28,6 +28,7 @@ See [AGENTS.md](../../AGENTS.md) for the branch and review workflow.
 
 | Task | Branch | Status | Date |
 |---|---|---|---|
+| [Control envelope and type registry](009-control-envelope.md) | `task/control-envelope` | review | 2026-11-27 |
 | [Protobuf handshake schemas](008-protobuf-schemas.md) | `task/protobuf-schemas` | merged | 2026-11-27 |
 | [Dependency enforcement](007-dependency-enforcement.md) | `task/dependency-enforcement` | merged | 2026-11-27 |
 | [Async transport benchmark](006-async-transport-benchmark.md) | `task/async-transport-bench` | merged | 2026-11-27 |

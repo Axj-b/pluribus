@@ -322,7 +322,8 @@ last_reviewed: 2026-11-25
 - **Trade-offs:** A blocking-first spike delays async work but reduces protocol risk. Asio is portable and well maintained but adds a dependency and learning curve.
 - **Confidence:** medium
 - **Progress (2026-11-25):** the narrow blocking `Stream`, in-memory loopback and IPv4 TCP transport are implemented with loopback benchmarks. Async stack selection remains open.
-- **Next action:** Benchmark a standalone Asio candidate against the blocking reference and record the chosen stack.
+- **Progress (2026-11-27):** a standalone Asio single-connection benchmark was slower than the blocking reference on WSL loopback (RTT p50 81.0 µs vs 63.6 µs, throughput 828 vs 5147 MiB/s). Blocking remains the reference; concurrency testing is still needed.
+- **Next action:** Add a 32–128 concurrent-client benchmark for Asio and a comparable blocking reference, then decide the V1 stack.
 - **Related:** [Q-40](../decisions/engineering.md#q-40), [Fabric](../notes/fabric.md)
 
 ## OI-26 Workspace snapshot adoption

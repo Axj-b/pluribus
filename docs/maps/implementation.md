@@ -47,8 +47,9 @@ last_reviewed: 2026-11-25
    allowlist in [Spec 09](../spec/09-repository-cmake-structure.md#mechanical-enforcement).
 4. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
    temporary dependency-free test harness.
-5. **Async transport benchmark**: compare the current blocking transport and an async stack
-   (for example Asio) against the documented loopback/LAN latency targets.
+5. **Concurrent transport benchmark and stack decision**: the single-connection Asio benchmark is
+   done and favors the blocking reference; add 32–128 concurrent clients before selecting the async
+   stack.
 
 ### Next
 
@@ -104,4 +105,5 @@ See the [open-question map](open-questions.md), especially:
 - [Fabric transport report](../reports/fabric-transport.md) - blocking TCP, loopback and frame stream.
 - [Fabric session report](../reports/fabric-session.md) - bootstrap handshake and sequenced sessions.
 - [Codec benchmark report](../reports/codec-benchmark.md) - Protocol Buffers selected for V1 control.
+- [Async transport benchmark report](../reports/async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
 - [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.

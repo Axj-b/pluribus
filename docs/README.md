@@ -30,6 +30,7 @@ unit-tested; ABI/runtime validation pending.**
 | See what is still unknown | [Open questions](maps/open-questions.md) |
 | Browse concepts by topic | [Knowledge map](maps/knowledge.md), [Notes](notes/README.md) |
 | Look up a term | [Glossary](glossary.md) |
+| Use Pluribus as an end user | [End-user guide](guides/end-user-guide.md) |
 | Understand this docs system | [Knowledge base guide](knowledge-base.md) |
 | Capture a loose idea | [Inbox](inbox.md) |
 | Review a task before merging | [Task reports](reports/README.md) |

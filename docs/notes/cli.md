@@ -42,6 +42,7 @@ resolution end to end. If the CLI needs an internal shortcut, the public API is 
 
 ## Related
 
+- [End-user guide](../guides/end-user-guide.md)
 - [Execution](execution.md)
 - [Services](service.md)
 - [Packages](package.md)

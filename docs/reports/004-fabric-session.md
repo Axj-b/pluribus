@@ -70,7 +70,7 @@ Checked 77 Markdown files: 1149 relative links and 372 local anchors resolve.
 ## Measurements and benchmarks
 
 **Not applicable as a new performance benchmark.** This slice is handshake and sequencing
-correctness; the existing [fabric transport benchmark](fabric-transport.md) covers the underlying
+correctness; the existing [fabric transport benchmark](003-fabric-transport.md) covers the underlying
 loopback frame RTT and throughput. A future session benchmark should measure handshake latency and
 sequenced request/response overhead after the payload codec is selected.
 
@@ -110,7 +110,7 @@ sequenced request/response overhead after the payload codec is selected.
 ## Links
 
 - [Fabric note](../notes/fabric.md)
-- [Transport report](fabric-transport.md)
+- [Transport report](003-fabric-transport.md)
 - [Implementation map](../maps/implementation.md)
 - [OI-06 control schema](../questions/README.md#oi-06-control-message-schema-and-type-registry)
 - [OI-14 serializer selection](../questions/README.md#oi-14-serializer-selection)

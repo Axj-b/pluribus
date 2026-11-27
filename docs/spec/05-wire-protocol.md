@@ -63,7 +63,7 @@ Bound queues, replay buffers and history. Apply flow control per data connection
 
 **V1 decision (2026-11-26):** Protocol Buffers is selected for V1 control payloads in
 [Q-47](../decisions/fabric-services.md#q-47), based on the [codec benchmark
-report](../reports/codec-benchmark.md). Cap'n Proto and FlatBuffers remain candidates for a future
+report](../reports/005-codec-benchmark.md). Cap'n Proto and FlatBuffers remain candidates for a future
 major change, not V1. The Protobuf schemas, numeric type registry and flags are still provisional and
 must not be treated as a frozen wire contract.
 

@@ -14,11 +14,11 @@ last_reviewed: 2026-11-25
 
 ## In review
 
-- [Dependency enforcement](../reports/dependency-enforcement.md) — `task/dependency-enforcement` — CMake graph check and platform-include scan.
-- [Async transport benchmark](../reports/async-transport-benchmark.md) — `task/async-transport-bench` — blocking vs Asio single-connection comparison.
-- [Codec benchmark](../reports/codec-benchmark.md) — `task/codec-benchmark` — Protobuf/FlatBuffers/Cap'n Proto comparison and Q-47 selection.
-- [Fabric session](../reports/fabric-session.md) — `task/fabric-session` — bootstrap handshake and sequenced sessions.
-- [Fabric transport](../reports/fabric-transport.md) — `task/fabric-transport` — blocking TCP, loopback and frame-stream transport with benchmarks.
+- [Dependency enforcement](../reports/007-dependency-enforcement.md) — `task/dependency-enforcement` — CMake graph check and platform-include scan.
+- [Async transport benchmark](../reports/006-async-transport-benchmark.md) — `task/async-transport-bench` — blocking vs Asio single-connection comparison.
+- [Codec benchmark](../reports/005-codec-benchmark.md) — `task/codec-benchmark` — Protobuf/FlatBuffers/Cap'n Proto comparison and Q-47 selection.
+- [Fabric session](../reports/004-fabric-session.md) — `task/fabric-session` — bootstrap handshake and sequenced sessions.
+- [Fabric transport](../reports/003-fabric-transport.md) — `task/fabric-transport` — blocking TCP, loopback and frame-stream transport with benchmarks.
 
 ## Approved
 
@@ -26,8 +26,8 @@ last_reviewed: 2026-11-25
 
 ## Merged
 
-- [Open question guidance](../reports/open-question-guidance.md) — `chore/open-question-guidance` — explanations, suggested behaviors and trade-offs for all 28 open questions.
-- [Task workflow scaffold](../reports/task-workflow.md) — `chore/task-workflow` — branch/report workflow and templates.
+- [Open question guidance](../reports/002-open-question-guidance.md) — `chore/open-question-guidance` — explanations, suggested behaviors and trade-offs for all 28 open questions.
+- [Task workflow scaffold](../reports/001-task-workflow.md) — `chore/task-workflow` — branch/report workflow and templates.
 
 ## How to use reports
 

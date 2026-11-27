@@ -63,7 +63,7 @@ Environment:
 - WSL2 Ubuntu 24.04, GCC 13.3.0, CMake Release (`-O3 -DNDEBUG`).
 - Loopback IPv4 (`127.0.0.1`), one connection, sequential round trips.
 - Same 256-byte small frame and 1,048,560-byte large payload as the blocking benchmark.
-- Asio: four runs; blocking reference: three runs from the [fabric transport report](fabric-transport.md).
+- Asio: four runs; blocking reference: three runs from the [fabric transport report](003-fabric-transport.md).
 
 | Metric | Blocking reference | Asio | Difference |
 |---|---:|---:|---:|
@@ -134,7 +134,7 @@ stack decision.
 ## Links
 
 - [Asio benchmark source](../../benchmarks/transport/asio_bench.cpp)
-- [Blocking transport report](fabric-transport.md)
+- [Blocking transport report](003-fabric-transport.md)
 - [OI-25 network stack selection](../questions/README.md#oi-25-network-stack-selection)
 - [Fabric note](../notes/fabric.md)
 - [Implementation map](../maps/implementation.md)

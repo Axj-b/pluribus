@@ -188,7 +188,7 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Benchmark FlatBuffers, Cap'n Proto and Protocol Buffers on the documented message mix and select one codec for all control traffic. Provisional default: Protocol Buffers, because its schema evolution, tooling and cross-language support are strong; switch only if the benchmark shows a decisive advantage for another option on bounded decode/latency/allocations. Pin generated-code versions and test unknown-field behavior before freezing payloads.
 - **Trade-offs:** Protobuf adds generated code and copies; FlatBuffers/Cap'n Proto can reduce decode cost but add schema/tooling constraints. A single codec keeps the protocol simpler than mixing.
 - **Confidence:** high
-- **Resolution:** Protocol Buffers selected for V1 control payloads in [Q-47](../decisions/fabric-services.md#q-47). See the [codec benchmark report](../reports/codec-benchmark.md).
+- **Resolution:** Protocol Buffers selected for V1 control payloads in [Q-47](../decisions/fabric-services.md#q-47). See the [codec benchmark report](../reports/005-codec-benchmark.md).
 - **Next action:** Define the versioned Protobuf control schemas, generate code, and replace the provisional bootstrap codec.
 - **Related:** [Fabric](../notes/fabric.md), [Protocol versioning](../notes/protocol-versioning.md)
 

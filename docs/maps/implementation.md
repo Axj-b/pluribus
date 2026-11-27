@@ -102,9 +102,9 @@ See the [open-question map](open-questions.md), especially:
 ## Session history
 
 - [2026-11-25](../log/2026-11-25.md) - core model, scheduler, fabric framing.
-- [Fabric transport report](../reports/fabric-transport.md) - blocking TCP, loopback and frame stream.
-- [Fabric session report](../reports/fabric-session.md) - bootstrap handshake and sequenced sessions.
-- [Codec benchmark report](../reports/codec-benchmark.md) - Protocol Buffers selected for V1 control.
-- [Async transport benchmark report](../reports/async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
-- [Dependency enforcement report](../reports/dependency-enforcement.md) - CMake graph check and platform-include scan.
-- [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.
+- [Fabric transport report](../reports/003-fabric-transport.md) - blocking TCP, loopback and frame stream.
+- [Fabric session report](../reports/004-fabric-session.md) - bootstrap handshake and sequenced sessions.
+- [Codec benchmark report](../reports/005-codec-benchmark.md) - Protocol Buffers selected for V1 control.
+- [Async transport benchmark report](../reports/006-async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
+- [Dependency enforcement report](../reports/007-dependency-enforcement.md) - CMake graph check and platform-include scan.
+- [Task workflow report](../reports/001-task-workflow.md) — branch/report process and review workflow.

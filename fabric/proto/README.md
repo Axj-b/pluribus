@@ -1,6 +1,7 @@
 # Wire schemas
 
-Versioned Protocol Buffers schemas for the Pluribus wire protocol.
+Versioned Protocol Buffers schemas for the Pluribus wire protocol. For how to send and receive
+control messages through the codec, see [Using the fabric control codec](../README.md).
 
 ## Files
 

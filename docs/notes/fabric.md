@@ -67,6 +67,7 @@ session replay/resume, heartbeat integration and the final async stack are next.
 
 ## Related
 
+- [Using the control codec](../../fabric/README.md)
 - [Protocol versioning](protocol-versioning.md)
 - [Master](master.md)
 - [Node](node.md)

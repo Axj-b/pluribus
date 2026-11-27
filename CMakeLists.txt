@@ -7,6 +7,8 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 include(PluribusCompilerOptions)
 
 option(PLURIBUS_BUILD_TESTS "Build Pluribus tests" ON)
+option(PLURIBUS_BUILD_CODEC_BENCH "Build the control-codec benchmark (downloads dependencies)" OFF)
+option(PLURIBUS_BUILD_TRANSPORT_BENCH "Build the async transport benchmark (downloads Asio)" OFF)
 option(PLURIBUS_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
 
 set(CMAKE_CXX_STANDARD 23)
@@ -21,3 +23,14 @@ if(PLURIBUS_BUILD_TESTS)
     enable_testing()
     add_subdirectory(tests)
 endif()
+
+if(PLURIBUS_BUILD_CODEC_BENCH)
+    add_subdirectory(benchmarks/codec)
+endif()
+
+if(PLURIBUS_BUILD_TRANSPORT_BENCH)
+    add_subdirectory(benchmarks/transport)
+endif()
+
+include(PluribusDependencies)
+pluribus_enforce_dependencies()

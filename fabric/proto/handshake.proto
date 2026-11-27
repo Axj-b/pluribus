@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package pluribus.wire;
+
+enum SessionRole {
+  SESSION_ROLE_UNSPECIFIED = 0;
+  SESSION_ROLE_NODE = 1;
+  SESSION_ROLE_CLIENT = 2;
+}
+
+message ProtocolVersion {
+  uint32 major = 1;
+  uint32 minor = 2;
+}
+
+message Hello {
+  SessionRole role = 1;
+  repeated ProtocolVersion versions = 2;
+  uint64 features = 3;
+  string identity = 4;
+  string join_token = 5;
+  bytes prior_session = 6;
+}
+
+message Welcome {
+  ProtocolVersion version = 1;
+  bytes session = 2;
+  uint64 features = 3;
+  uint32 max_control_payload = 4;
+  uint32 max_outstanding_requests = 5;
+  bool resumed = 6;
+}
+
+enum RejectCode {
+  REJECT_CODE_UNSPECIFIED = 0;
+  REJECT_CODE_UNSUPPORTED_VERSION = 1;
+  REJECT_CODE_UNSUPPORTED_FEATURE = 2;
+  REJECT_CODE_UNAUTHORIZED = 3;
+  REJECT_CODE_INVALID_ARGUMENT = 4;
+  REJECT_CODE_INTERNAL = 5;
+}
+
+message Reject {
+  RejectCode code = 1;
+  string diagnostic = 2;
+}

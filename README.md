@@ -20,14 +20,13 @@ slice is in place:
 | Target | Contents |
 |---|---|
 | `pluribuscore` | Strong IDs, portable errors, execution spec/state machine, node and service descriptors, sandbox path validation |
-| `pluribusfabric` | Control-frame header/encoding, bounded incremental decoder, provisional bootstrap message types |
+| `pluribusfabric` | Control framing, frame stream, in-memory loopback, blocking TCP transport, Protobuf handshake and session sequencing |
 | `pluribusscheduler` | Pure V1 scheduler policy with exact integer/rational scoring |
-| tests | Unit tests for the core model, fabric framing and the documented scheduler cases |
+| tests | Unit tests for the core model, fabric framing/transport/session and the documented scheduler cases |
 
-Not implemented yet: TCP transport and session handshake, `pluribusmaster`,
-`pluribusnode`, `pluribussim` backends, artifact store, public C++ client, and
-the `plu` CLI. The wire serialization format and runtime ABI remain open design
-decisions.
+Not implemented yet: control envelope schema, session replay/resume, heartbeat, async transport
+stack, `pluribusmaster`, `pluribusnode`, `pluribussim` backends, artifact store, public C++ client,
+and the `plu` CLI. The runtime ABI remains an open design decision.
 
 ## Build and test
 
@@ -41,7 +40,11 @@ ctest --preset windows-gcc-debug
 ```
 
 On Linux use `linux-gcc-debug`; on macOS use `macos-appleclang-debug`.
-Warnings can be promoted to errors with `-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
+On Windows, `scripts\test-wsl.cmd` configures, builds and tests the Linux build inside WSL using
+the `wsl-gcc-debug` preset. `scripts\bench-codec.cmd` builds and runs the codec benchmark in WSL, and
+`scripts\bench-transport.cmd` runs the blocking-vs-Asio transport benchmark, and
+`scripts\check-deps.cmd` scans for platform-header leakage. Warnings can be promoted
+to errors with `-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
 
 The test harness is a deliberately dependency-free placeholder so the first
 targets build without a package manager. Replace or wrap it when the vcpkg
@@ -53,7 +56,8 @@ manifest and dependency baseline are introduced.
 core/               platform-independent model and contracts
 fabric/             control framing and transport
 master/scheduler/   pure scheduling policy
-tests/              unit tests and test support
+tests/              unit tests, transport benchmarks and test support
+benchmarks/         standalone codec and transport benchmarks
 scripts/            parameterless repository checks and developer scripts
 cmake/              compiler options and shared CMake helpers
 docs/               architecture, specifications, second-brain layer and task reports

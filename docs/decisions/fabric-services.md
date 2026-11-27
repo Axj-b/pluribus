@@ -75,6 +75,14 @@ source of context and consequences; expand an entry when the decision is revisit
 
 **Applies to.** [Public API](../architecture/05-fabric-and-services.md#56-public-api-surface-v1)
 
+---
+
+## Q-47
+
+**Decision.** Use Protocol Buffers for V1 control payloads; the benchmarked Cap'n Proto and FlatBuffers alternatives remain candidates for a future major change, not V1.
+
+**Applies to.** [Wire protocol](../spec/05-wire-protocol.md#serialization-benchmark-and-selection)
+
 ## Navigation
 
 - [Decision records index](README.md)

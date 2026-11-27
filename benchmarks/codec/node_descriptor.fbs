@@ -1,0 +1,19 @@
+include "common.fbs";
+
+namespace pluribus.bench.fb;
+
+table NodeDescriptor {
+  id:string;
+  name:string;
+  abi:string;
+  architecture:string;
+  logical_cpu_count:uint;
+  total_memory:ulong;
+  capabilities:[string];
+  devices:[string];
+  cpu_load_basis_points:uint;
+  available_memory:ulong;
+  running_executions:uint;
+}
+
+root_type NodeDescriptor;

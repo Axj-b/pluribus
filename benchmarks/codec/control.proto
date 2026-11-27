@@ -1,0 +1,52 @@
+syntax = "proto3";
+
+package pluribus.bench.pb;
+
+enum Lifetime {
+  LIFETIME_FINITE = 0;
+  LIFETIME_PERSISTENT = 1;
+}
+
+enum Access {
+  ACCESS_READ_ONLY = 0;
+  ACCESS_READ_WRITE = 1;
+}
+
+message ArtifactInput {
+  string artifact = 1;
+  string path = 2;
+  Access access = 3;
+}
+
+message Submit {
+  string request_id = 1;
+  string executable = 2;
+  repeated string arguments = 3;
+  map<string, string> environment = 4;
+  map<string, string> labels = 5;
+  repeated ArtifactInput inputs = 6;
+  repeated string outputs = 7;
+  Lifetime lifetime = 8;
+  repeated string services = 9;
+  int64 cpu_millicores = 10;
+  uint64 memory_bytes = 11;
+  string architecture = 12;
+  string abi = 13;
+  repeated string required_capabilities = 14;
+  repeated string required_devices = 15;
+  string explicit_node = 16;
+}
+
+message NodeDescriptor {
+  string id = 1;
+  string name = 2;
+  string abi = 3;
+  string architecture = 4;
+  uint32 logical_cpu_count = 5;
+  uint64 total_memory = 6;
+  repeated string capabilities = 7;
+  repeated string devices = 8;
+  uint32 cpu_load_basis_points = 9;
+  uint64 available_memory = 10;
+  uint32 running_executions = 11;
+}

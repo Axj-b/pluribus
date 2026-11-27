@@ -8,7 +8,7 @@ last_reviewed: 2026-11-25
 
 # Decision records
 
-> The 46 accepted decisions are grouped into six thematic files. Each section keeps its stable
+> The 47 accepted decisions are grouped into six thematic files. Each section keeps its stable
 > `Q-N` ID, the decision text and a link to the canonical document where it applies.
 
 The canonical document remains the source of context and consequences. Expand a decision section
@@ -21,7 +21,7 @@ when it is revisited or superseded.
 | [scope.md](scope.md) | Product scope, naming, documentation order and delivery approach. | Q-1, Q-2, Q-7, Q-8, Q-9, Q-45, Q-46 |
 | [execution.md](execution.md) | Execution identity, lifecycle, labels, ownership, paths, sandbox retention and resource modeling. | Q-10, Q-11, Q-12, Q-13, Q-21, Q-23, Q-26, Q-27 |
 | [control-plane.md](control-plane.md) | Master state, FIFO scheduling, resources, heartbeat, outage behavior and Thor platform targeting. | Q-16, Q-17, Q-18, Q-19, Q-20, Q-25, Q-29 |
-| [fabric-services.md](fabric-services.md) | Wire codec, idempotency, service naming, provider resolution, stream semantics and networking boundaries. | Q-15, Q-28, Q-30, Q-31, Q-32, Q-33, Q-34, Q-35 |
+| [fabric-services.md](fabric-services.md) | Wire codec, idempotency, service naming, provider resolution, stream semantics and networking boundaries. | Q-15, Q-28, Q-30, Q-31, Q-32, Q-33, Q-34, Q-35, Q-47 |
 | [store-packaging.md](store-packaging.md) | Compatibility, native packaging, executable syntax, artifact caching and transfer strategy. | Q-3, Q-4, Q-5, Q-36, Q-37 |
 | [engineering.md](engineering.md) | Public API, configuration, toolchains, dependencies, concurrency, security baseline, logging, build enforcement and CLI behavior. | Q-6, Q-14, Q-22, Q-24, Q-38, Q-39, Q-40, Q-41, Q-42, Q-43, Q-44 |
 
@@ -75,6 +75,7 @@ when it is revisited or superseded.
 | Q-44 | `--json`, explicit config precedence, foreground wait/stream/exit code and `--detach` | [CLI](../architecture/08-roadmap.md#cli-plu) | [Q-44](engineering.md#q-44) |
 | Q-45 | Uniform distributed environment, not Linux simulator; what/where/how invariant | [Overview](../architecture/01-overview.md#11-vision) | [Q-45](scope.md#q-45) |
 | Q-46 | Ordered specifications, then first end-to-end remote hello before expansion | [Roadmap](../architecture/08-roadmap.md#documentation-priorities) | [Q-46](scope.md#q-46) |
+| Q-47 | Use Protocol Buffers for V1 control payloads after the codec benchmark | [Wire protocol](../spec/05-wire-protocol.md#serialization-benchmark-and-selection) | [Q-47](fabric-services.md#q-47) |
 
 ## See also
 

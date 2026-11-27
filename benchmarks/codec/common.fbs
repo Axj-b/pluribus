@@ -1,0 +1,9 @@
+namespace pluribus.bench.fb;
+
+enum Lifetime : ubyte { finite = 0, persistent = 1 }
+enum Access : ubyte { read_only = 0, read_write = 1 }
+
+table KeyValue {
+  key:string;
+  value:string;
+}

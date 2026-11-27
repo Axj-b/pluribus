@@ -17,7 +17,7 @@ last_reviewed: 2026-11-25
 | Target | Location | Status | Tests |
 |---|---|---|---|
 | `pluribuscore` | [`core/`](../../core) | Model, IDs, errors, paths, state machine | 22 unit tests |
-| `pluribusfabric` | [`fabric/`](../../fabric) | Control framing and incremental decoder | 10 unit tests |
+| `pluribusfabric` | [`fabric/`](../../fabric) | Framing, frame stream, loopback, blocking TCP, bootstrap handshake and session sequencing | 19 unit tests |
 | `pluribusscheduler` | [`master/scheduler/`](../../master/scheduler) | Pure V1 scheduler | 16 unit tests |
 | `pluribusmaster` | — | Not started | — |
 | `pluribusnode` | — | Not started | — |
@@ -30,7 +30,7 @@ last_reviewed: 2026-11-25
 | Milestone | Scope | Status |
 |---|---|---|
 | A | Core model: IDs, spec, handle/state, node/resources, service, protocol contracts | Core model done; wire schema still open |
-| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing/decoder done; TCP, session and payload codec pending |
+| B | Fabric: listener, connection, framing, serialization, heartbeat | Framing, transport, bootstrap handshake and session sequencing done; payload codec, replay/resume, heartbeat and async stack pending |
 | C | Node registry: registration, CPU/RAM reporting, health, `plu nodes` | Not started |
 | D | Remote execution: queue, trivial scheduler, assignment, launch, logs, exit, `plu run` | Scheduler done; master/node/runtime/CLI pending |
 | E | Lifecycle: `plu ps`, `plu stop`, persistent executions, node loss | Not started |
@@ -41,16 +41,15 @@ last_reviewed: 2026-11-25
 
 ### Now
 
-1. **TCP transport and connection boundary** for `pluribusfabric`: explicit bind, read/write loops,
-   bounded buffers, close semantics, fake in-memory transport for tests.
-2. **Handshake and session scaffolding**: Hello/Welcome/Reject, version negotiation, directional
-   sequence, replay/dedup boundary.
-3. **Wire payload codec decision**: benchmark FlatBuffers, Cap'n Proto and Protobuf on representative
-   control messages before freezing a schema. Until then, keep payloads opaque to framing.
-4. **Dependency enforcement**: add a configure/CI check that compares the CMake target graph to the
-   allowlist in [Spec 09](../spec/09-repository-cmake-structure.md#mechanical-enforcement).
-5. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
+1. **Define the control envelope and remaining message schemas** (the bootstrap handshake already uses Protobuf).
+2. **Session replay/resume and heartbeat**: acks, replay buffers, gap recovery, heartbeat cadence.
+3. **Dependency enforcement**: the configure-time graph check and include scan are done; add
+   negative fixtures and pin the toolchain/dependency baseline.
+4. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
    temporary dependency-free test harness.
+5. **Concurrent transport benchmark and stack decision**: the single-connection Asio benchmark is
+   done and favors the blocking reference; add 32–128 concurrent clients before selecting the async
+   stack.
 
 ### Next
 
@@ -102,5 +101,11 @@ See the [open-question map](open-questions.md), especially:
 
 ## Session history
 
-- [2026-11-25](../log/2026-11-25.md) — core model, scheduler, fabric framing.
-- [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.
+- [2026-11-25](../log/2026-11-25.md) - core model, scheduler, fabric framing.
+- [Fabric transport report](../reports/003-fabric-transport.md) - blocking TCP, loopback and frame stream.
+- [Fabric session report](../reports/004-fabric-session.md) - bootstrap handshake and sequenced sessions.
+- [Codec benchmark report](../reports/005-codec-benchmark.md) - Protocol Buffers selected for V1 control.
+- [Protobuf handshake report](../reports/008-protobuf-schemas.md) - versioned Protobuf Hello/Welcome/Reject codec.
+- [Async transport benchmark report](../reports/006-async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
+- [Dependency enforcement report](../reports/007-dependency-enforcement.md) - CMake graph check and platform-include scan.
+- [Task workflow report](../reports/001-task-workflow.md) — branch/report process and review workflow.

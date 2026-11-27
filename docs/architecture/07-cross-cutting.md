@@ -15,7 +15,7 @@ last_reviewed: 2026-11-25
 |------|--------|-------|
 | Language | C++23 | MSVC/Clang on Windows, Clang/GCC on Linux, Apple Clang/Clang on macOS, NVIDIA-supported DRIVE OS toolchain on Thor; pin versions in CI (Q-38) |
 | Build | CMake + Ninja | Per-platform backend selection at configure time |
-| Serialization | Benchmark before selection | FlatBuffers, Cap'n Proto and Protocol Buffers, using representative control messages (Q-15) |
+| Serialization | Protocol Buffers (Q-47) | Selected after the codec benchmark; see `docs/reports/005-codec-benchmark.md`. Cap'n Proto and FlatBuffers remain future candidates. |
 | Hashing | SHA-256 | Use a maintained library, not custom primitives (Q-39) |
 | Transport | TCP | Benchmark-driven async/network stack (Q-39, Q-40) |
 | Concurrency | Async event-driven I/O | Coroutines acceptable; small pool for blocking/CPU work; no thread-per-connection or massive custom actor framework; hide behind boundaries (Q-40) |

@@ -92,7 +92,8 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Define one versioned envelope with `request_id`, optional portable `Error`, and a `oneof` payload. Reserve numeric ranges: `0` invalid, `1–3` bootstrap, `16–63` control-plane, `64–127` services/artifacts, `128–255` extensions; publish the registry in one source of truth. Keep flags `0` in V1, with a documented future bit range. Unknown optional fields are preserved; unknown required flags/versions fail negotiation. Choose the codec via [OI-14](#oi-14-serializer-selection) before freezing payloads.
 - **Trade-offs:** Reserving ranges is cheap and prevents later collisions; a premature concrete schema could lock in mistakes. Keep bootstrap messages tiny and separately versioned from application messages.
 - **Confidence:** medium
-- **Next action:** After the serializer benchmark, publish the envelope schema, numeric registry and conformance fixtures.
+- **Progress (2026-11-27):** the bootstrap handshake now uses a versioned Protobuf schema; the control-message envelope and remaining message types are still open.
+- **Next action:** Define the versioned control envelope, message catalog and numeric type registry; generate code and replace the remaining provisional payloads.
 - **Related:** [Fabric](../notes/fabric.md), [Wire protocol](../spec/05-wire-protocol.md)
 
 ## OI-07 Endpoint tickets and route authorization
@@ -181,14 +182,15 @@ last_reviewed: 2026-11-25
 
 ## OI-14 Serializer selection
 
-- **Status:** open
+- **Status:** resolved
 - **Source:** [Wire protocol](../spec/05-wire-protocol.md#serialization-benchmark-and-selection), [Q-15](../decisions/fabric-services.md#q-15)
 - **Question:** Which wire codec should carry control messages?
 - **Explanation:** The codec affects encoded size, decode latency, allocations, schema evolution, tooling and cross-language support. The spec explicitly requires a benchmark rather than choosing by popularity. Data-plane throughput must not dominate a control-message decision.
-- **Suggested behavior (proposal):** Benchmark FlatBuffers, Cap’n Proto and Protocol Buffers on the documented message mix and select one codec for all control traffic. Provisional default: Protocol Buffers, because its schema evolution, tooling and cross-language support are strong; switch only if the benchmark shows a decisive advantage for another option on bounded decode/latency/allocations. Pin generated-code versions and test unknown-field behavior before freezing payloads.
-- **Trade-offs:** Protobuf adds generated code and copies; FlatBuffers/Cap’n Proto can reduce decode cost but add schema/tooling constraints. A single codec keeps the protocol simpler than mixing.
-- **Confidence:** medium
-- **Next action:** Build the benchmark harness and record the decision as a new Q record before defining payloads.
+- **Suggested behavior (proposal):** Benchmark FlatBuffers, Cap'n Proto and Protocol Buffers on the documented message mix and select one codec for all control traffic. Provisional default: Protocol Buffers, because its schema evolution, tooling and cross-language support are strong; switch only if the benchmark shows a decisive advantage for another option on bounded decode/latency/allocations. Pin generated-code versions and test unknown-field behavior before freezing payloads.
+- **Trade-offs:** Protobuf adds generated code and copies; FlatBuffers/Cap'n Proto can reduce decode cost but add schema/tooling constraints. A single codec keeps the protocol simpler than mixing.
+- **Confidence:** high
+- **Resolution:** Protocol Buffers selected for V1 control payloads in [Q-47](../decisions/fabric-services.md#q-47). See the [codec benchmark report](../reports/005-codec-benchmark.md).
+- **Next action:** Define the versioned Protobuf control schemas, generate code, and replace the provisional bootstrap codec.
 - **Related:** [Fabric](../notes/fabric.md), [Protocol versioning](../notes/protocol-versioning.md)
 
 ## OI-15 Data-plane framing and limits
@@ -284,7 +286,8 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Add a parameterless `scripts/check-deps.ps1` (or an equivalent CMake/CI check) that evaluates the target graph, compares it to the allowlist in the spec, rejects cycles and unclassified internal targets, and scans source/includes for forbidden platform/application headers. Test the checker with deliberate negative fixtures. Pin compiler, preset and dependency versions in CI. Run it before adding `pluribusmaster` and `pluribusnode`, while the graph is still small.
 - **Trade-offs:** The checker needs maintenance and can produce false positives; those are preferable to silent boundary violations. Graph evaluation must not rely on one textual grep.
 - **Confidence:** high
-- **Next action:** Implement the graph/include check and wire it into CI once the dependency baseline exists.
+- **Progress (2026-11-27):** a configure-time CMake graph check and a `scripts/check-deps.ps1` include scan are implemented and passing; negative fixtures and toolchain pinning are still open.
+- **Next action:** Add negative fixtures, transitive include scanning in CI, and pin compiler/dependency versions.
 - **Related:** [Q-39](../decisions/engineering.md#q-39), [Q-43](../decisions/engineering.md#q-43), [Repository structure](../notes/repository-structure.md)
 
 ## OI-23 Client authorization and local isolation
@@ -320,7 +323,9 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Keep a narrow transport/`Stream` interface and implement a small blocking TCP transport first to prove the handshake. Then benchmark a standalone Asio-based implementation (or Boost.Asio if already accepted) against platform sockets for loopback/LAN latency and allocations. Choose the async stack based on the documented targets, keep it private to the transport layer, and never expose its types in the public API.
 - **Trade-offs:** A blocking-first spike delays async work but reduces protocol risk. Asio is portable and well maintained but adds a dependency and learning curve.
 - **Confidence:** medium
-- **Next action:** Build the transport spike and measure loopback/LAN control round-trip before freezing the choice.
+- **Progress (2026-11-25):** the narrow blocking `Stream`, in-memory loopback and IPv4 TCP transport are implemented with loopback benchmarks. Async stack selection remains open.
+- **Progress (2026-11-27):** a standalone Asio single-connection benchmark was slower than the blocking reference on WSL loopback (RTT p50 81.0 µs vs 63.6 µs, throughput 828 vs 5147 MiB/s). Blocking remains the reference; concurrency testing is still needed.
+- **Next action:** Add a 32–128 concurrent-client benchmark for Asio and a comparable blocking reference, then decide the V1 stack.
 - **Related:** [Q-40](../decisions/engineering.md#q-40), [Fabric](../notes/fabric.md)
 
 ## OI-26 Workspace snapshot adoption

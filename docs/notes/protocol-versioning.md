@@ -46,8 +46,10 @@ Do not compare or persist them as if they were one number.
 
 ## Versioning status
 
-The wire design is **not frozen**. Publication of a stable version requires the selected codec,
-conformance fixtures, negotiation/evolution tests, security review and a release/deprecation policy.
+The wire design is **not frozen**. Protocol Buffers is selected for V1 control payloads (Q-47), but
+the schemas, numeric type registry and flags remain provisional. Publication of a stable version
+requires conformance fixtures, negotiation/evolution tests, security review and a release/deprecation
+policy.
 
 ## Related
 

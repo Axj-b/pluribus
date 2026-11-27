@@ -20,7 +20,7 @@ last_reviewed: 2026-11-25
 | 2 | [Node/master protocol](../spec/02-node-master-protocol.md) | Draft | [Master](../notes/master.md), [Node](../notes/node.md), [Fabric](../notes/fabric.md) | Not yet |
 | 3 | [C++ public API](../spec/03-cpp-public-api.md) | Draft | [CLI](../notes/cli.md) | Not yet |
 | 4 | [Service model](../spec/04-service-model.md) | Draft | [Services](../notes/service.md) | Not yet |
-| 5 | [Wire protocol](../spec/05-wire-protocol.md) | Draft | [Fabric](../notes/fabric.md), [Versioning](../notes/protocol-versioning.md) | Framing + decoder in `pluribusfabric` |
+| 5 | [Wire protocol](../spec/05-wire-protocol.md) | Draft | [Fabric](../notes/fabric.md), [Versioning](../notes/protocol-versioning.md) | Framing, transport, handshake/session; Protobuf selected (Q-47) |
 | 6 | [Node/runtime boundary](../spec/06-node-runtime-boundary.md) | Draft | [Node](../notes/node.md), [Runtime](../notes/runtime.md), [Sandbox](../notes/sandbox.md) | Not yet |
 | 7 | [Scheduler V1](../spec/07-scheduler-v1.md) | Draft | [Scheduler](../notes/scheduler.md) | `pluribusscheduler` with tests |
 | 8 | [Artifact/store protocol](../spec/08-artifact-store-protocol.md) | Draft | [Artifact store](../notes/artifact-store.md), [Packages](../notes/package.md) | Not yet |

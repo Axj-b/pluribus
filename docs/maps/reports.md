@@ -14,6 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
+- [Protobuf handshake schemas](../reports/008-protobuf-schemas.md) — `task/protobuf-schemas` — versioned Protobuf Hello/Welcome/Reject codec.
 - [Dependency enforcement](../reports/007-dependency-enforcement.md) — `task/dependency-enforcement` — CMake graph check and platform-include scan.
 - [Async transport benchmark](../reports/006-async-transport-benchmark.md) — `task/async-transport-bench` — blocking vs Asio single-connection comparison.
 - [Codec benchmark](../reports/005-codec-benchmark.md) — `task/codec-benchmark` — Protobuf/FlatBuffers/Cap'n Proto comparison and Q-47 selection.

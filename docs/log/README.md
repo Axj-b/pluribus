@@ -16,7 +16,7 @@ last_reviewed: 2026-11-25
 
 | Date | Summary |
 |---|---|
-| [2026-11-27](2026-11-27.md) | Async transport benchmark; blocking reference retained |
+| [2026-11-27](2026-11-27.md) | Async benchmark, dependency enforcement, Protobuf handshake schemas |
 | [2026-11-26](2026-11-26.md) | Control codec benchmark; Protocol Buffers selected |
 | [2026-11-25](2026-11-25.md) | Core model, scheduler, fabric transport/session, second-brain docs layer |
 

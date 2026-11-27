@@ -48,8 +48,28 @@ Frame make_frame(std::uint8_t type, std::initializer_list<unsigned int> payload)
 
 } // namespace
 
-PLURIBUS_TEST(fabric_handshake_codec_round_trip) {
+PLURIBUS_TEST(fabric_handshake_codec_empty_optional_fields) {
     Hello hello = make_hello();
+    const auto encoded = encode_hello(hello);
+    CHECK(encoded.has_value());
+    const auto decoded = decode_hello(*encoded);
+    CHECK(decoded.has_value());
+    CHECK(!decoded->join_token.has_value());
+    CHECK(!decoded->prior_session.has_value());
+
+    Welcome welcome;
+    welcome.version = ProtocolVersion{1, 0};
+    welcome.session = SessionId::generate();
+    welcome.limits = SessionLimits{4096, 2};
+    welcome.resumed = false;
+    const auto welcome_bytes = encode_welcome(welcome);
+    CHECK(welcome_bytes.has_value());
+    const auto welcome_decoded = decode_welcome(*welcome_bytes);
+    CHECK(welcome_decoded.has_value());
+    CHECK(!welcome_decoded->resumed);
+}
+
+PLURIBUS_TEST(fabric_handshake_codec_round_trip) {    Hello hello = make_hello();
     hello.versions = {ProtocolVersion{1, 0}, ProtocolVersion{2, 1}};
     hello.join_token = "join-secret";
     hello.prior_session = *SessionId::parse("11111111-2222-4333-8444-555555555555");

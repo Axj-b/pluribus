@@ -20,11 +20,11 @@ slice is in place:
 | Target | Contents |
 |---|---|
 | `pluribuscore` | Strong IDs, portable errors, execution spec/state machine, node and service descriptors, sandbox path validation |
-| `pluribusfabric` | Control framing, frame stream, in-memory loopback, blocking TCP transport, bootstrap handshake and session sequencing |
+| `pluribusfabric` | Control framing, frame stream, in-memory loopback, blocking TCP transport, Protobuf handshake and session sequencing |
 | `pluribusscheduler` | Pure V1 scheduler policy with exact integer/rational scoring |
 | tests | Unit tests for the core model, fabric framing/transport/session and the documented scheduler cases |
 
-Not implemented yet: Protobuf control schemas, session replay/resume, heartbeat, async transport
+Not implemented yet: control envelope schema, session replay/resume, heartbeat, async transport
 stack, `pluribusmaster`, `pluribusnode`, `pluribussim` backends, artifact store, public C++ client,
 and the `plu` CLI. The runtime ABI remains an open design decision.
 

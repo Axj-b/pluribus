@@ -41,7 +41,7 @@ last_reviewed: 2026-11-25
 
 ### Now
 
-1. **Define the versioned Protobuf control schemas** and replace the provisional bootstrap codec.
+1. **Define the control envelope and remaining message schemas** (the bootstrap handshake already uses Protobuf).
 2. **Session replay/resume and heartbeat**: acks, replay buffers, gap recovery, heartbeat cadence.
 3. **Dependency enforcement**: the configure-time graph check and include scan are done; add
    negative fixtures and pin the toolchain/dependency baseline.
@@ -105,6 +105,7 @@ See the [open-question map](open-questions.md), especially:
 - [Fabric transport report](../reports/003-fabric-transport.md) - blocking TCP, loopback and frame stream.
 - [Fabric session report](../reports/004-fabric-session.md) - bootstrap handshake and sequenced sessions.
 - [Codec benchmark report](../reports/005-codec-benchmark.md) - Protocol Buffers selected for V1 control.
+- [Protobuf handshake report](../reports/008-protobuf-schemas.md) - versioned Protobuf Hello/Welcome/Reject codec.
 - [Async transport benchmark report](../reports/006-async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
 - [Dependency enforcement report](../reports/007-dependency-enforcement.md) - CMake graph check and platform-include scan.
 - [Task workflow report](../reports/001-task-workflow.md) — branch/report process and review workflow.

@@ -17,14 +17,9 @@ FetchContent_Declare(flatbuffers
 )
 FetchContent_MakeAvailable(flatbuffers)
 
-set(protobuf_BUILD_TESTS OFF CACHE BOOL "" FORCE)
-set(protobuf_BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)
-FetchContent_Declare(protobuf
-    GIT_REPOSITORY https://github.com/protocolbuffers/protobuf.git
-    GIT_TAG v3.21.12
-    GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(protobuf)
+# Protobuf is fetched and built by pluribusfabric (libprotobuf plus protoc when
+# this benchmark is enabled), so this target reuses protobuf::libprotobuf and
+# protoc directly.
 
 set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
 set(BUILD_SHARED_LIBS OFF CACHE BOOL "" FORCE)

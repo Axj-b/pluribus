@@ -28,6 +28,7 @@ See [AGENTS.md](../../AGENTS.md) for the branch and review workflow.
 
 | Task | Branch | Status | Date |
 |---|---|---|---|
+| [Protobuf handshake schemas](008-protobuf-schemas.md) | `task/protobuf-schemas` | review | 2026-11-27 |
 | [Dependency enforcement](007-dependency-enforcement.md) | `task/dependency-enforcement` | review | 2026-11-27 |
 | [Async transport benchmark](006-async-transport-benchmark.md) | `task/async-transport-bench` | review | 2026-11-27 |
 | [Codec benchmark](005-codec-benchmark.md) | `task/codec-benchmark` | review | 2026-11-26 |

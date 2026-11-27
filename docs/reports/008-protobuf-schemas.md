@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-protobuf-schemas
-status: review
+status: merged
 task: Protobuf handshake schemas
 branch: task/protobuf-schemas
 base: task/dependency-enforcement
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-27
 tags: [report, fabric, protobuf, wire, schema]
 last_reviewed: 2026-11-27
@@ -25,7 +27,7 @@ dependency-enforcement/async/codec/session/transport branches.
 - **Base:** `task/dependency-enforcement` (stacked; merge order matters)
 - **Commits:** see `git log --oneline task/dependency-enforcement..HEAD`
 - **Date:** 2026-11-27
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

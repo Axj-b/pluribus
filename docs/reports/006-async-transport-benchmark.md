@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-async-transport-benchmark
-status: review
+status: merged
 task: Async transport benchmark
 branch: task/async-transport-bench
 base: task/codec-benchmark
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-27
 tags: [report, fabric, transport, asio, benchmark]
 last_reviewed: 2026-11-27
@@ -25,7 +27,7 @@ baseline for now; a concurrent-connection benchmark is still needed before selec
 - **Base:** `task/codec-benchmark` (stacked; merge order matters)
 - **Commits:** see `git log --oneline task/codec-benchmark..HEAD`
 - **Date:** 2026-11-27
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

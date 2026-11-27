@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-dependency-enforcement
-status: review
+status: merged
 task: Dependency enforcement
 branch: task/dependency-enforcement
 base: task/async-transport-bench
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-27
 tags: [report, cmake, dependencies, build]
 last_reviewed: 2026-11-27
@@ -25,7 +27,7 @@ headers. The branch is stacked on the unmerged async/transport/codec/session bra
 - **Base:** `task/async-transport-bench` (stacked; merge order matters)
 - **Commits:** see `git log --oneline task/async-transport-bench..HEAD`
 - **Date:** 2026-11-27
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

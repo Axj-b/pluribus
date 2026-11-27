@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-fabric-session
-status: review
+status: merged
 task: Fabric bootstrap handshake and session sequencing
 branch: task/fabric-session
 base: task/fabric-transport
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-25
 tags: [report, fabric, session, handshake]
 last_reviewed: 2026-11-25
@@ -25,7 +27,7 @@ review, so this branch is stacked on `task/fabric-transport`.
 - **Base:** `task/fabric-transport` (stacked; merge transport first)
 - **Commits:** see `git log --oneline task/fabric-transport..HEAD`
 - **Date:** 2026-11-25
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

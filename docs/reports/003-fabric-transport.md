@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-fabric-transport
-status: review
+status: merged
 task: Fabric transport boundary
 branch: task/fabric-transport
 base: dev
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-25
 tags: [report, fabric, transport, benchmark]
 last_reviewed: 2026-11-25
@@ -26,7 +28,7 @@ implementation before choosing an async stack.
 - **Base:** `dev`
 - **Commits:** see `git log --oneline dev..HEAD`
 - **Date:** 2026-11-25
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

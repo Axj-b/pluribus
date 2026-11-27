@@ -1,10 +1,12 @@
 ---
 type: report
 id: report-codec-benchmark
-status: review
+status: merged
 task: Control codec benchmark and selection
 branch: task/codec-benchmark
 base: task/fabric-session
+merged_into: dev
+merged_at: 2026-11-27
 date: 2026-11-26
 tags: [report, codec, benchmark, protobuf, flatbuffers, capnproto]
 last_reviewed: 2026-11-26
@@ -25,7 +27,7 @@ targets at V1 scale. The branch is stacked on the unmerged fabric session/transp
 - **Base:** `task/fabric-session` (stacked; merge transport and session first)
 - **Commits:** see `git log --oneline task/fabric-session..HEAD`
 - **Date:** 2026-11-26
-- **Status:** review
+- **Status:** merged
 
 ## What changed
 

@@ -285,7 +285,8 @@ last_reviewed: 2026-11-25
 - **Suggested behavior (proposal):** Add a parameterless `scripts/check-deps.ps1` (or an equivalent CMake/CI check) that evaluates the target graph, compares it to the allowlist in the spec, rejects cycles and unclassified internal targets, and scans source/includes for forbidden platform/application headers. Test the checker with deliberate negative fixtures. Pin compiler, preset and dependency versions in CI. Run it before adding `pluribusmaster` and `pluribusnode`, while the graph is still small.
 - **Trade-offs:** The checker needs maintenance and can produce false positives; those are preferable to silent boundary violations. Graph evaluation must not rely on one textual grep.
 - **Confidence:** high
-- **Next action:** Implement the graph/include check and wire it into CI once the dependency baseline exists.
+- **Progress (2026-11-27):** a configure-time CMake graph check and a `scripts/check-deps.ps1` include scan are implemented and passing; negative fixtures and toolchain pinning are still open.
+- **Next action:** Add negative fixtures, transitive include scanning in CI, and pin compiler/dependency versions.
 - **Related:** [Q-39](../decisions/engineering.md#q-39), [Q-43](../decisions/engineering.md#q-43), [Repository structure](../notes/repository-structure.md)
 
 ## OI-23 Client authorization and local isolation

@@ -43,8 +43,8 @@ last_reviewed: 2026-11-25
 
 1. **Define the versioned Protobuf control schemas** and replace the provisional bootstrap codec.
 2. **Session replay/resume and heartbeat**: acks, replay buffers, gap recovery, heartbeat cadence.
-3. **Dependency enforcement**: add a configure/CI check that compares the CMake target graph to the
-   allowlist in [Spec 09](../spec/09-repository-cmake-structure.md#mechanical-enforcement).
+3. **Dependency enforcement**: the configure-time graph check and include scan are done; add
+   negative fixtures and pin the toolchain/dependency baseline.
 4. **Dependency and test baseline**: decide vcpkg manifest/pinned baseline and replace or wrap the
    temporary dependency-free test harness.
 5. **Concurrent transport benchmark and stack decision**: the single-connection Asio benchmark is
@@ -106,4 +106,5 @@ See the [open-question map](open-questions.md), especially:
 - [Fabric session report](../reports/fabric-session.md) - bootstrap handshake and sequenced sessions.
 - [Codec benchmark report](../reports/codec-benchmark.md) - Protocol Buffers selected for V1 control.
 - [Async transport benchmark report](../reports/async-transport-benchmark.md) - blocking reference vs Asio on single-connection loopback.
+- [Dependency enforcement report](../reports/dependency-enforcement.md) - CMake graph check and platform-include scan.
 - [Task workflow report](../reports/task-workflow.md) — branch/report process and review workflow.

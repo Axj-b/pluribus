@@ -31,3 +31,6 @@ endif()
 if(PLURIBUS_BUILD_TRANSPORT_BENCH)
     add_subdirectory(benchmarks/transport)
 endif()
+
+include(PluribusDependencies)
+pluribus_enforce_dependencies()

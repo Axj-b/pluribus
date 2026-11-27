@@ -14,6 +14,7 @@ last_reviewed: 2026-11-25
 
 ## In review
 
+- [Dependency enforcement](../reports/dependency-enforcement.md) — `task/dependency-enforcement` — CMake graph check and platform-include scan.
 - [Async transport benchmark](../reports/async-transport-benchmark.md) — `task/async-transport-bench` — blocking vs Asio single-connection comparison.
 - [Codec benchmark](../reports/codec-benchmark.md) — `task/codec-benchmark` — Protobuf/FlatBuffers/Cap'n Proto comparison and Q-47 selection.
 - [Fabric session](../reports/fabric-session.md) — `task/fabric-session` — bootstrap handshake and sequenced sessions.

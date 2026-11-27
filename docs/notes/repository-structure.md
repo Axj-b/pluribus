@@ -70,8 +70,9 @@ Forbidden: `core -> platform`, core -> host OS headers, `master -> RadarScape`,
 
 ## Current implementation
 
-`pluribuscore`, `pluribusfabric` (framing) and `pluribusscheduler` exist with tests. The dependency
-graph check and vcpkg baseline are still open.
+`pluribuscore`, `pluribusfabric` (framing, transport, handshake/session) and `pluribusscheduler`
+exist with tests. A configure-time dependency graph check and a parameterless platform-include scan
+enforce the component boundaries. The vcpkg baseline and negative fixtures are still open.
 
 ## Related
 

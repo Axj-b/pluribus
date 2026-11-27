@@ -42,7 +42,8 @@ ctest --preset windows-gcc-debug
 On Linux use `linux-gcc-debug`; on macOS use `macos-appleclang-debug`.
 On Windows, `scripts\test-wsl.cmd` configures, builds and tests the Linux build inside WSL using
 the `wsl-gcc-debug` preset. `scripts\bench-codec.cmd` builds and runs the codec benchmark in WSL, and
-`scripts\bench-transport.cmd` runs the blocking-vs-Asio transport benchmark. Warnings can be promoted
+`scripts\bench-transport.cmd` runs the blocking-vs-Asio transport benchmark, and
+`scripts\check-deps.cmd` scans for platform-header leakage. Warnings can be promoted
 to errors with `-DPLURIBUS_WARNINGS_AS_ERRORS=ON`.
 
 The test harness is a deliberately dependency-free placeholder so the first

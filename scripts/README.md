@@ -13,6 +13,8 @@
 | `bench-codec.cmd` | Windows wrapper for `bench-codec.ps1` |
 | `bench-transport.ps1` | Configure, build and run the blocking-vs-Asio transport benchmark inside WSL |
 | `bench-transport.cmd` | Windows wrapper for `bench-transport.ps1` |
+| `check-deps.ps1` | Scan core, scheduler and fabric public headers for platform includes |
+| `check-deps.cmd` | Windows wrapper for `check-deps.ps1` |
 
 ## Usage
 
@@ -29,6 +31,7 @@ scripts\check-docs.cmd
 scripts\test-wsl.cmd
 scripts\bench-codec.cmd
 scripts\bench-transport.cmd
+scripts\check-deps.cmd
 ```
 
 Both forms take no parameters. The scripts exit non-zero when a check or build fails.

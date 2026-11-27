@@ -40,6 +40,11 @@ target_link_libraries(pluribus_fabric_bench PRIVATE
     Threads::Threads
 )
 
+if(WIN32)
+    add_test(NAME deps.static
+        COMMAND pwsh -NoProfile -File "${CMAKE_SOURCE_DIR}/scripts/check-deps.ps1")
+endif()
+
 add_executable(pluribus_scheduler_tests unit/scheduler_tests.cpp)
 target_link_libraries(pluribus_scheduler_tests PRIVATE
     pluribusscheduler
